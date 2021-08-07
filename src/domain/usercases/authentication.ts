@@ -1,5 +1,6 @@
+import { AccountModel } from '../entities'
 export interface Authentication {
-  auth: (params: Authentication.Params) => Promise<void>
+  auth: (params: Authentication.Params) => Promise<AccountModel>
 }
 
 export namespace Authentication {
