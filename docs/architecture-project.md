@@ -1,6 +1,8 @@
 ## Clean Architecture
 <br/>
 
+![Clean Architecture](./images/clean-architecture-uncle-bob.jpeg)
+
 **Domain Layer**
 
 A camada de mais alto nível, responsável por amazenar os casos de uso e as entidades, basicamente as regras de negócios. Nesta camada não existem implementações concretas, apenas interfaces.
