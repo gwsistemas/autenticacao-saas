@@ -11,8 +11,9 @@ export class RemoteAuthentication {
       body: AuthenticationParamsMapper.authParams(params)
     })
     switch (httpResponse.statusCode) {
+      case HttpStatusCode.ok: break
       case HttpStatusCode.unauthorized: throw new InvalideCredentialsError()
-      case HttpStatusCode.badRequest: throw new UnexpectedError()
+      default: throw new UnexpectedError()
     }
   }
 }
