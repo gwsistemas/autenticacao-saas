@@ -1,8 +1,9 @@
 import { HttpStatusCode } from '@/data/protocols/http'
 import { HttpClientPostSpy } from '@/data/test'
-import { InvalideCredentialsError } from '@/domain/errors/invalide-credentials-error'
+import { InvalideCredentialsError, UnexpectedError } from '@/domain/errors'
 import { mockAuthentication } from '@/domain/test'
-import { RemoteAuthentication } from '.'
+import { RemoteAuthentication } from '@/data/usecases'
+import { AuthenticationParamsMapper } from '@/data/mappers'
 import faker from 'faker'
 
 interface SutTypes {
@@ -26,15 +27,24 @@ describe('RemoteAuthentication', () => {
   it('should call HttpPostClient with correct body', async () => {
     const { sut, httpPostClientSpy } = makeSut()
     const authenticationParams = mockAuthentication()
+    const authParams = AuthenticationParamsMapper.authParams(authenticationParams)
     await sut.auth(authenticationParams)
-    expect(httpPostClientSpy.body).toEqual(authenticationParams)
+    expect(httpPostClientSpy.body).toEqual(authParams)
   })
-  it('should throw InvalidCredentialsErro if HttpPostClient returns 401', async () => {
+  it('should throw InvalidCredentialsError if HttpPostClient returns 401', async () => {
     const { sut, httpPostClientSpy } = makeSut()
     httpPostClientSpy.response = {
       statusCode: HttpStatusCode.unauthorized
     }
     const promise = sut.auth(mockAuthentication())
     await expect(promise).rejects.toThrow(new InvalideCredentialsError())
+  })
+  it('should throw UnexpectedError if HttpPostClient returns 400', async () => {
+    const { sut, httpPostClientSpy } = makeSut()
+    httpPostClientSpy.response = {
+      statusCode: HttpStatusCode.badRequest
+    }
+    const promise = sut.auth(mockAuthentication())
+    await expect(promise).rejects.toThrow(new UnexpectedError())
   })
 })
