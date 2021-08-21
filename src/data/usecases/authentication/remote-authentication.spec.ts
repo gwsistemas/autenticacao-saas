@@ -3,16 +3,16 @@ import { HttpClientPostSpy } from '@/data/test'
 import { InvalideCredentialsError, UnexpectedError } from '@/domain/errors'
 import { mockAuthentication } from '@/domain/test'
 import { RemoteAuthentication } from '@/data/usecases'
-import { AuthenticationParamsMapper } from '@/data/mappers'
 import faker from 'faker'
+import { Authentication } from '@/domain/usecases'
 
 interface SutTypes {
   sut: RemoteAuthentication
-  httpPostClientSpy: HttpClientPostSpy
+  httpPostClientSpy: HttpClientPostSpy<Authentication.Params, Authentication.Model>
 }
 
 const makeSut = (url: string = faker.internet.url()): SutTypes => {
-  const httpPostClientSpy = new HttpClientPostSpy()
+  const httpPostClientSpy = new HttpClientPostSpy<Authentication.Params, Authentication.Model>()
   const sut = new RemoteAuthentication(url, httpPostClientSpy)
   return { sut, httpPostClientSpy }
 }
@@ -27,9 +27,8 @@ describe('RemoteAuthentication', () => {
   it('should call HttpPostClient with correct body', async () => {
     const { sut, httpPostClientSpy } = makeSut()
     const authenticationParams = mockAuthentication()
-    const authParams = AuthenticationParamsMapper.authParams(authenticationParams)
     await sut.auth(authenticationParams)
-    expect(httpPostClientSpy.body).toEqual(authParams)
+    expect(httpPostClientSpy.body).toEqual(authenticationParams)
   })
   it('should throw InvalidCredentialsError if HttpPostClient returns 401', async () => {
     const { sut, httpPostClientSpy } = makeSut()
