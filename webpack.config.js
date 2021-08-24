@@ -1,5 +1,12 @@
 const path = require('path')
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin')
+const webpack = require('webpack')
+const ReactRefreshTypeScript = require('react-refresh-typescript')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+
+const isDevelopment = process.env.NODE_ENV !== 'production'
+
+console.log(isDevelopment)
 
 module.exports = {
   mode: 'development',
@@ -19,7 +26,15 @@ module.exports = {
     rules: [
       {
         test: /\.ts(x?)$/,
-        loader: 'ts-loader',
+        loader: require.resolve('ts-loader'),
+        options: {
+          getCustomTransformers: () => ({
+            before: isDevelopment ? [ReactRefreshTypeScript()] : []
+          }),
+          // `ts-loader` does not work with HMR unless `transpileOnly` is used.
+          // If you need type checking, `ForkTsCheckerWebpackPlugin` is an alternative.
+          transpileOnly: isDevelopment
+        },
         exclude: /node_modules/
       },
       {
@@ -51,5 +66,9 @@ module.exports = {
     react: 'React',
     'react-dom': 'ReactDOM'
   },
-  plugins: [new CleanWebpackPlugin()]
+  plugins: [
+    new CleanWebpackPlugin(),
+    isDevelopment && new webpack.HotModuleReplacementPlugin(),
+    isDevelopment && new ReactRefreshWebpackPlugin()
+  ].filter(Boolean)
 }

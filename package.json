@@ -26,6 +26,7 @@
   },
   "homepage": "https://github.com/gwsistemas/autenticacao-saas#readme",
   "devDependencies": {
+    "@pmmmwh/react-refresh-webpack-plugin": "^0.4.3",
     "@types/axios": "^0.14.0",
     "@types/faker": "^5.5.7",
     "@types/jest": "^26.0.23",
@@ -34,12 +35,9 @@
     "@types/react-dom": "^17.0.9",
     "@types/react-router-dom": "^5.1.8",
     "@typescript-eslint/eslint-plugin": "^4.27.0",
+    "clean-webpack-plugin": "^4.0.0-alpha.0",
     "eslint": "^7.29.0",
     "eslint-config-standard-with-typescript": "^20.0.0",
-    "clean-webpack-plugin": "^4.0.0-alpha.0",
-    "webpack": "^5.27.0",
-    "webpack-cli": "^4.5.0",
-    "webpack-dev-server": "^3.11.2",
     "eslint-plugin-import": "^2.23.4",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^5.1.0",
@@ -51,9 +49,14 @@
     "identity-obj-proxy": "^3.0.0",
     "jest": "^27.0.4",
     "lint-staged": "^11.0.0",
+    "react-refresh": "^0.9.0",
+    "react-refresh-typescript": "^2.0.2",
     "ts-jest": "^27.0.3",
     "ts-loader": "^9.2.3",
-    "typescript": "^4.3.4"
+    "typescript": "^4.3.4",
+    "webpack": "^5.27.0",
+    "webpack-cli": "^4.5.0",
+    "webpack-dev-server": "^3.11.2"
   },
   "dependencies": {
     "@commitlint/cli": "^12.1.4",
