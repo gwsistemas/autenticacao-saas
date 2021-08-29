@@ -16,6 +16,9 @@ declare module 'styled-components' {
       error: {
         main: string
       }
+      grey: {
+        [prop in number | string]: string
+      }
     }
     typography: {
       fontWeight: number
