@@ -60,7 +60,11 @@ module.exports = {
     contentBase: './public',
     writeToDisk: true,
     historyApiFallback: true,
-    port: 8080
+    port: 8080,
+    overlay: {
+      errors: true,
+      warnings: false
+    }
   },
   externals: {
     react: 'React',
