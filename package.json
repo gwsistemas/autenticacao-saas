@@ -4,7 +4,7 @@
   "description": "GW Sistema",
   "main": "index.js",
   "scripts": {
-    "start": "./node_modules/.bin/webpack serve",
+    "start": "./node_modules/.bin/webpack-dashboard -- ./node_modules/.bin/webpack serve",
     "test": "jest --passWithNoTests -no-cache --runInBand",
     "test:watch": "npm test -- --watch",
     "test:staged": "npm test -- --findRelatedTests",
@@ -58,6 +58,7 @@
     "typescript": "^4.3.4",
     "webpack": "^5.27.0",
     "webpack-cli": "^4.5.0",
+    "webpack-dashboard": "^3.3.5",
     "webpack-dev-server": "^3.11.2"
   },
   "dependencies": {
