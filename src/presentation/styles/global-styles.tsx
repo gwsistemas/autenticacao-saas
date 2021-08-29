@@ -21,6 +21,11 @@ html, body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+body {
+  font-family: 'Open Sans', sans-serif;;
+  font-weight: 400;
+}
+
 button,
 input,
 optgroup,
@@ -28,9 +33,13 @@ select,
 textarea {
   font: inherit;
   margin: 0;
+  border: 0;
   &:focus {
     outline: none;
     outline: 0;
+  }
+  &:disabled {
+    cursor: not-allowed;
   }
 }
 
@@ -69,6 +78,12 @@ a {
 a:active,
 a:hover {
   outline-width: 0;
+}
+
+img {
+  width: 100%;
+  display: block;
+  height: auto;
 }
 
 @media screen and (min-width: 1170px) {

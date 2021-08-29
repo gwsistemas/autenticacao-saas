@@ -19,18 +19,18 @@ export const defaultTheme: DefaultTheme = {
     grey
   },
   typography: {
-    fontFamily: "'Nanum Gothic', sans-serif",
+    fontFamily: "'Open Sans', sans-serif;",
     htmlFontSize: 16,
     fontSize: 14,
     fontWeight: 400,
     h1: {
-      fontFamily: "'Nanum Gothic', sans-serif",
+      fontFamily: "'Open Sans', sans-serif;",
       fontSize: '4rem',
       fontWeight: 400,
       lineHeight: 1.2
     },
     body1: {
-      fontFamily: "'Nanum Gothic', sans-serif",
+      fontFamily: "'Open Sans', sans-serif;",
       fontSize: '4rem',
       fontWeight: 400,
       lineHeight: 1.5
