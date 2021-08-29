@@ -1,7 +1,8 @@
 import { DefaultTheme } from 'styled-components'
+import { grey } from './colors'
 
 export const defaultTheme: DefaultTheme = {
-  borderRadius: '',
+  borderRadius: '4px',
   colors: {
     common: {
       black: '#000',
@@ -14,7 +15,8 @@ export const defaultTheme: DefaultTheme = {
     },
     error: {
       main: 'red'
-    }
+    },
+    grey
   },
   typography: {
     fontFamily: "'Nanum Gothic', sans-serif",
