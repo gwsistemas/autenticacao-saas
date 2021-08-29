@@ -7,5 +7,6 @@ coverage
 src/**/*.md
 
 public
-
+dist
 *.scss
+*.json
