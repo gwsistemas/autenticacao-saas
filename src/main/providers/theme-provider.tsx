@@ -1,6 +1,6 @@
 import React from 'react'
 import { ThemeProvider as ProviderStyled } from 'styled-components'
-import { defaultTheme } from '@/presentation/styles'
+import { defaultTheme, GlobalStyle } from '@/presentation/styles'
 
 type Props = {
   children: React.ReactNode
@@ -8,7 +8,10 @@ type Props = {
 
 const ThemeProvider: React.FC<Props> = ({ children }: Props) => {
   return (
-    <ProviderStyled theme={defaultTheme}>{children}</ProviderStyled>
+    <>
+      <GlobalStyle />
+      <ProviderStyled theme={defaultTheme}>{children}</ProviderStyled>
+    </>
   )
 }
 
