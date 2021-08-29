@@ -1,5 +1,10 @@
 import React from 'react'
 import ReactDom from 'react-dom'
-import { Router } from '@/presentation/components'
+import { Router } from '@/main/router'
+import { Providers } from '@/main/providers'
 
-ReactDom.render(<Router />, document.getElementById('main'))
+ReactDom.render(
+  <Providers>
+    <Router />
+  </Providers>
+  , document.getElementById('main'))
