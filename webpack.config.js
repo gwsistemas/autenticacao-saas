@@ -3,10 +3,11 @@ const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin'
 const webpack = require('webpack')
 const ReactRefreshTypeScript = require('react-refresh-typescript')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const DashboardPlugin = require('webpack-dashboard/plugin')
 
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
-console.log(isDevelopment)
+console.log(`mode: ${isDevelopment ? 'development' : 'production'}`)
 
 module.exports = {
   mode: 'development',
@@ -73,6 +74,7 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin(),
     isDevelopment && new webpack.HotModuleReplacementPlugin(),
-    isDevelopment && new ReactRefreshWebpackPlugin()
+    isDevelopment && new ReactRefreshWebpackPlugin(),
+    new DashboardPlugin()
   ].filter(Boolean)
 }
