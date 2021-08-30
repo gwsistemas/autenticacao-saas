@@ -6,7 +6,7 @@ export const defaultTheme: DefaultTheme = {
   colors: {
     common: {
       black: '#000',
-      white: '#000'
+      white: '#fff'
     },
     primary: {
       light: '#3273dc',
@@ -25,13 +25,13 @@ export const defaultTheme: DefaultTheme = {
     fontWeight: 400,
     h1: {
       fontFamily: "'Open Sans', sans-serif;",
-      fontSize: '4rem',
+      fontSize: '2.5rem',
       fontWeight: 400,
       lineHeight: 1.2
     },
     body1: {
       fontFamily: "'Open Sans', sans-serif;",
-      fontSize: '4rem',
+      fontSize: '1.6rem',
       fontWeight: 400,
       lineHeight: 1.5
     }

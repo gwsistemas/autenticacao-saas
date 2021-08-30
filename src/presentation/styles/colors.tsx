@@ -10,5 +10,6 @@ export const grey: Color = {
   600: '#7a7a7a',
   700: '#616161',
   A50: '#dbdbdb',
-  A100: '#d5d5d5'
+  A100: '#d5d5d5',
+  A200: '#4a4a4a'
 }
