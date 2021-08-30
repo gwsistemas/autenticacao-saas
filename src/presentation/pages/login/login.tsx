@@ -1,5 +1,5 @@
 import React from 'react'
-import { Input } from '@/presentation/components'
+import { Input, Typography } from '@/presentation/components'
 
 const Login: React.FC = () => {
   return (
@@ -12,6 +12,8 @@ const Login: React.FC = () => {
         helpText="Riquired"
         label="E-mail"
       />
+      <Typography variant="h1" color="primaryText">Headline H1</Typography>
+      <Typography>Body P</Typography>
     </div>
   )
 }
