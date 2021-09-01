@@ -12,3 +12,8 @@ export const grey: Color = {
   A50: '#dbdbdb',
   A100: '#d5d5d5'
 }
+
+export const smalt: Color = {
+  10: 'rgba(0, 55, 156, 0.1)',
+  900: 'rgba(0, 55, 156, 1)'
+}

@@ -1,14 +1,15 @@
 import React from 'react'
-import { InputWrapper, Label, InputBase, HelpeText } from './styles'
+
 import { Props } from './types'
+import { InputWrapper, Label, InputBase, HelpeText } from './styles'
 
 const Input: React.FC<Props> = ({
-  helpText,
-  label,
-  htmlFor,
   id,
   name,
   error,
+  label,
+  htmlFor,
+  helpText,
   fullWidth,
   ...rest
 }: Props) => {
