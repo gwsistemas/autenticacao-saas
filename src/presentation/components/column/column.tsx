@@ -7,7 +7,7 @@ const Column: React.FC<ColumnProps> = ({
   children,
   ...rest
 }: ColumnProps) => (
-  <Wrapper {...rest}>{children}</Wrapper>
+  <Wrapper data-testid="column" {...rest}>{children}</Wrapper>
 )
 
 export default Column
