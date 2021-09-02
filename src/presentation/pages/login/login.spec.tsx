@@ -26,6 +26,6 @@ describe('Login Component', () => {
     expect(form.childElementCount).toBeGreaterThan(0)
 
     const submiButton = sut.getByTestId('submit') as HTMLButtonElement
-    expect(submiButton.disabled).toBe(true)
+    expect(submiButton.disabled).toBe(false)
   })
 })

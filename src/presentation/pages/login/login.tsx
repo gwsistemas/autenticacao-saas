@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button, Column, Form, Input } from '@/presentation/components'
 
-import { Page, Logo, IntroObject, Divider } from './styles'
+import { Page, Logo, IntroObject, Divider, Row, Icones, Link } from './styles'
 
 const Login: React.FC = () => {
   return (
@@ -26,8 +26,19 @@ const Login: React.FC = () => {
             label="Senha"
             placeholder="Digite sua senha"
           />
-          <Button data-testid="submit" disabled>Login</Button>
+          <Row id="content-buttons">
+            <Button data-testid="submit" title="Login" />
+          </Row>
         </Form>
+        <Row>
+          <Column>
+            <Link>Esqueceu a senha?</Link>
+          </Column>
+          <Column>
+            <Link>Ainda não possui cadastro?</Link>
+          </Column>
+        </Row>
+        <Icones src="/images/icones-login-trans.png" />
       </Column>
     </Page>
   )
