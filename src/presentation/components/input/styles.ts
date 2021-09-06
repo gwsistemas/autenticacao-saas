@@ -9,7 +9,7 @@ export const Label = styled.label`
 
 export const HelpeText = styled.span`
   display: block;
-  font-size: 13px;
+  font-size: 1.3rem;
   margin-top: 0.2rem;
   color: ${({ theme }): string => theme.colors.grey[600]};
 `
@@ -17,25 +17,25 @@ export const HelpeText = styled.span`
 export const InputBase = styled.input<Props>`
   height: 36px;
   font-size: 1rem;
-  padding: 5px 9px;
   display: inline-block;
+  padding: 0.5rem 0.9rem;
   border-radius: ${({ theme }): string => theme.borderRadius};
   box-shadow: inset ${({ theme }): string => theme.shadows[1]};
-  border: 1px solid ${({ theme }): string => theme.colors.grey.A50};
   background-color: ${({ theme }): string => theme.colors.grey[50]};
+  border: 0.1rem solid ${({ theme }): string => theme.colors.grey.A50};
   width: ${({ fullWidth }): string => (fullWidth && '100%') || 'auto'};
 
   &:disabled {
+    box-shadow: none;
     border-color: transparent;
     color: ${({ theme }): string => theme.colors.grey[600]};
-    box-shadow: none;
   }
 `
 
 export const InputWrapper = styled.div<InputBaseProps>`
   display: flex;
   min-height: 68px;
-  margin-bottom: .75rem;
+  margin-bottom: 0.75rem;
   flex-direction: column;
   align-items: flex-start;
 
