@@ -4,11 +4,11 @@ export const Page = styled.div`
   display: flex;
   margin: 0.75rem;
   flex-wrap: wrap;
-  padding: 0px 16px;
   min-height: 100vh;
   position: relative;
   flex-direction: row;
   align-items: center;
+  padding: 0rem 1.6rem;
 `
 
 export const IntroObject = styled.object`
@@ -18,7 +18,7 @@ export const IntroObject = styled.object`
 
 export const Divider = styled.div`
   width: 2px;
-  border: 0px;
+  border: 0rem;
   height: 500px;
   background-image: linear-gradient(
     to top,
@@ -35,14 +35,14 @@ export const Divider = styled.div`
 export const Logo = styled.img`
   width: 260px;
   margin: 0px auto;
-  margin-top: 10px;
-  margin-bottom: 16px;
+  margin-top: 1rem;
+  margin-bottom: 1.6rem;
 `
 
 export const Row = styled.div`
   display: flex;
-  margin-bottom: 12px;
   align-items: center;
+  margin-bottom: 1.2rem;
   justify-content: center;
 `
 
@@ -61,6 +61,6 @@ export const Icones = styled.img`
   width: auto;
   height: 28px;
   display: block;
-  margin: 0px auto;
-  margin-top: 20px;
+  margin-top: 2rem;
+  margin: 0rem auto;
 `
