@@ -1,14 +1,14 @@
 import styled from 'styled-components'
 
 export const FormBase = styled.form`
-  padding: 0 75px 20px 75px;
+  padding: 0rem 7.5rem 2rem 7.5rem;
 
   #content-buttons {
-    margin-top: 40px;
-    margin-bottom: 0px;
+    margin-top: 4rem;
+    margin-bottom: 0rem;
   }
 
   @media screen and (max-width: 968px) {
-    padding: 0px;
+    padding: 0rem;
   }
 `
