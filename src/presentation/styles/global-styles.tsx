@@ -8,7 +8,7 @@ export const GlobalStyle = createGlobalStyle`
 }
 
 html {
-  font-size: 16px;
+  font-size: 10px;
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
 }
@@ -23,7 +23,7 @@ html, body, #main {
 }
 
 body {
-  font-size: 1rem;
+  font-size: 2rem;
   font-weight: 400;
   font-family: 'Open Sans', sans-serif;
 }
