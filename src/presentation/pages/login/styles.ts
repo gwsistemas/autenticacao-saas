@@ -49,6 +49,7 @@ export const Row = styled.div`
 export const Link = styled.a`
   display: block;
   cursor: pointer;
+  font-size: 1.6rem;
   text-align: center;
   color: ${({ theme }) => theme.colors.smalt.A10};
 
