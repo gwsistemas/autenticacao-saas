@@ -19,9 +19,6 @@ declare module 'styled-components' {
       grey: {
         [prop in number | string]: string
       }
-      smalt: {
-        [prop in number | string]: string
-      }
     }
     typography: {
       fontWeight: number

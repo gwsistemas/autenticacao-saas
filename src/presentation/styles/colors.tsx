@@ -13,10 +13,3 @@ export const grey: Color = {
   A50: '#dbdbdb',
   A100: '#d5d5d5'
 }
-
-export const smalt: Color = {
-  10: 'rgba(0, 55, 156, 0.1)',
-  100: 'rgba(0, 55, 156, 1)',
-  A10: '#3273dc',
-  A100: '#00287c'
-}

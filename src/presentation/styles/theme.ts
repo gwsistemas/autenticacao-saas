@@ -1,5 +1,5 @@
 import { DefaultTheme } from 'styled-components'
-import { grey, smalt } from './colors'
+import { grey } from './colors'
 
 export const defaultTheme: DefaultTheme = {
   borderRadius: '4px',
@@ -16,8 +16,7 @@ export const defaultTheme: DefaultTheme = {
     error: {
       main: 'red'
     },
-    grey,
-    smalt
+    grey
   },
   typography: {
     fontFamily: "'Open Sans', sans-serif;",
