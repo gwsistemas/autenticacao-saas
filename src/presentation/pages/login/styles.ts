@@ -1,4 +1,6 @@
+import { rgba } from 'polished'
 import styled from 'styled-components'
+import { Button } from '@/presentation/components'
 
 export const Page = styled.div`
   display: flex;
@@ -22,9 +24,9 @@ export const Divider = styled.div`
   height: 500px;
   background-image: linear-gradient(
     to top,
-    ${({ theme }) => theme.colors.smalt[10]},
-    ${({ theme }) => theme.colors.smalt[100]},
-    ${({ theme }) => theme.colors.smalt[10]}
+    ${({ theme }) => rgba(theme.colors.primary.main, 0.1)},
+    ${({ theme }) => theme.colors.primary.main},
+    ${({ theme }) => rgba(theme.colors.primary.main, 0.1)}
   );
 
   @media screen and (max-width: 968px) {
@@ -46,16 +48,10 @@ export const Row = styled.div`
   justify-content: center;
 `
 
-export const Link = styled.a`
+export const LinkButton = styled(Button)`
   display: block;
   cursor: pointer;
   font-size: 1.6rem;
-  text-align: center;
-  color: ${({ theme }) => theme.colors.smalt.A10};
-
-  &:hover {
-    color: ${({ theme }) => theme.colors.grey[900]};
-  }
 `
 
 export const Icones = styled.img`
