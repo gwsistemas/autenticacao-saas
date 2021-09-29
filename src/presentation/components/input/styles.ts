@@ -2,36 +2,43 @@ import styled, { css } from 'styled-components'
 import { Props, InputBaseProps } from './types'
 
 export const Label = styled.label`
+  display: block;
+  font-size: 1rem;
   color: ${({ theme }): string => theme.colors.common.black};
-  font-size: 1.6rem;
 `
 
 export const HelpeText = styled.span`
   display: block;
+  font-size: 1.3rem;
   margin-top: 0.2rem;
   color: ${({ theme }): string => theme.colors.grey[600]};
-  font-size: 1.3rem;
 `
 
 export const InputBase = styled.input<Props>`
-  display: block;
-  box-shadow: inset ${({ theme }): string => theme.shadows[1]};
-  font-size: inherit;
-  background-color: ${({ theme }): string => theme.colors.grey[50]};
-  border-radius: ${({ theme }): string => theme.borderRadius};
-  width: ${({ fullWidth }): string => (fullWidth && '100%') || 'auto'};
-  min-width: 160px;
   height: 36px;
-  border: 1px solid ${({ theme }): string => theme.colors.grey.A50};
+  font-size: 1rem;
+  display: inline-block;
+  padding: 0.5rem 0.9rem;
+  border-radius: ${({ theme }): string => theme.borderRadius};
+  box-shadow: inset ${({ theme }): string => theme.shadows[1]};
+  background-color: ${({ theme }): string => theme.colors.grey[50]};
+  border: 0.1rem solid ${({ theme }): string => theme.colors.grey.A50};
+  width: ${({ fullWidth }): string => (fullWidth && '100%') || 'auto'};
+
   &:disabled {
+    box-shadow: none;
     border-color: transparent;
     color: ${({ theme }): string => theme.colors.grey[600]};
-    box-shadow: none;
   }
 `
 
 export const InputWrapper = styled.div<InputBaseProps>`
-  font-size: 1.4rem;
+  display: flex;
+  min-height: 68px;
+  margin-bottom: 0.75rem;
+  flex-direction: column;
+  align-items: flex-start;
+
   ${({ error }) => error && css`
     ${InputBase} {
       border-color: ${({ theme }): string => theme.colors.error.main};
@@ -39,7 +46,8 @@ export const InputWrapper = styled.div<InputBaseProps>`
     ${HelpeText}, ${Label}, ${InputBase} {
       color: ${({ theme }): string => theme.colors.error.main};
     }
-  `} 
+  `}
+
   ${Label}, ${HelpeText} {
     margin-bottom: 0.8rem;
   }

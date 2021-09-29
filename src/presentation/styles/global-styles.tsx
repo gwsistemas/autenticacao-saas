@@ -8,22 +8,24 @@ export const GlobalStyle = createGlobalStyle`
 }
 
 html {
+  font-size: 10px;
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
-  font-size: 8px;
 }
 
-html, body {
-  padding: 0;
+html, body, #main {
   margin: 0;
-  font-size: 2rem;
+  padding: 0;
+  width: 100vw;
+  min-height: 100vh;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 body {
-  font-family: 'Open Sans', sans-serif;;
+  font-size: 2rem;
   font-weight: 400;
+  font-family: 'Open Sans', sans-serif;
 }
 
 button,
@@ -62,6 +64,7 @@ section,
 summary {
   display: block;
 }
+
 audio,
 canvas,
 progress,
@@ -85,12 +88,5 @@ img {
   display: block;
   height: auto;
 }
-
-@media screen and (min-width: 1170px) {
-  html {
-    font-size: 10px;
-  }
-}
-
 
 `

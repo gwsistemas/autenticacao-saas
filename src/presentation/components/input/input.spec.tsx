@@ -1,7 +1,8 @@
 import React from 'react'
-import { cleanup, render, RenderResult } from '@/main/config/test-utils'
 import faker from 'faker'
+
 import { Input } from '@/presentation/components'
+import { cleanup, render, RenderResult } from '@/main/config/test-utils'
 
 type SutTypes = {
   sut: RenderResult
