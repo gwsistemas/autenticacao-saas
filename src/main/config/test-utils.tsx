@@ -1,5 +1,6 @@
 import React from 'react'
-import { render, RenderOptions, RenderResult } from '@testing-library/react'
+import { render, RenderOptions, RenderResult, cleanup } from '@testing-library/react'
+
 import { Providers } from '../providers'
 
 type Props = {
@@ -17,5 +18,4 @@ const AllTheProviders: React.FC<Props> = ({ children }: Props) => {
 const customRender = (ui: React.ReactElement, options?: Omit<RenderOptions, 'wrapper'>): RenderResult =>
   render(ui, { wrapper: AllTheProviders, ...options })
 
-export * from '@testing-library/react'
-export { customRender as render }
+export { customRender as render, cleanup, RenderResult }
