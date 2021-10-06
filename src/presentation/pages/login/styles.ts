@@ -18,13 +18,6 @@ export const Divider = styled.div`
   }
 `
 
-export const Logo = styled.img`
-  width: 260px;
-  margin: 0px auto;
-  margin-top: 1rem;
-  margin-bottom: 1.6rem;
-`
-
 export const Row = styled.div`
   display: flex;
   align-items: center;

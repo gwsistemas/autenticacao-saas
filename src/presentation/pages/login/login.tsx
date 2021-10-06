@@ -1,9 +1,8 @@
 import React from 'react'
-import { Button, Column, Form, Page, Input, Iframe } from '@/presentation/components'
+import { Button, Column, Logo, Form, Page, Input, Iframe } from '@/presentation/components'
 
 import {
   Row,
-  Logo,
   Icones,
   Divider,
   LinkButton
@@ -17,7 +16,7 @@ const Login: React.FC = () => {
       </Column>
       <Divider />
       <Column data-testid="column-login">
-        <Logo src="/images/logo-gw-login-menor.png" alt="GW Logo" />
+        <Logo url="/images/logo-gw-login-menor.png" alt="GW Logo" />
         <Form data-testid="form-login">
           <Input fullWidth helpText="" label="E-mail" placeholder="Seu email" />
           <br />

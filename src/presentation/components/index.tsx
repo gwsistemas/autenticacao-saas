@@ -1,5 +1,6 @@
 export { Form } from './form'
 export { Page } from './page'
+export { Logo } from './logo'
 export { Input } from './input'
 export { Column } from './column'
 export { Button } from './button'
