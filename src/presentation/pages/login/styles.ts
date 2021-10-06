@@ -2,11 +2,6 @@ import { rgba } from 'polished'
 import styled from 'styled-components'
 import { Button } from '@/presentation/components'
 
-export const IntroObject = styled.object`
-  width: 100%;
-  height: 525px;
-`
-
 export const Divider = styled.div`
   width: 2px;
   border: 0rem;

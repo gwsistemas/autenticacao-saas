@@ -1,20 +1,19 @@
 import React from 'react'
-import { Button, Column, Form, Page, Input } from '@/presentation/components'
+import { Button, Column, Form, Page, Input, Iframe } from '@/presentation/components'
 
 import {
   Row,
   Logo,
   Icones,
   Divider,
-  LinkButton,
-  IntroObject
+  LinkButton
 } from './styles'
 
 const Login: React.FC = () => {
   return (
     <Page>
       <Column hideMobile data-testid="column-login">
-        <IntroObject data="https://gw-sas.s3.us-east-2.amazonaws.com/projeto-saas/templates/tela-login/anuncio-lado-esquerdo/infos-login.html" />
+        <Iframe data="https://gw-sas.s3.us-east-2.amazonaws.com/projeto-saas/templates/tela-login/anuncio-lado-esquerdo/infos-login.html" />
       </Column>
       <Divider />
       <Column data-testid="column-login">
