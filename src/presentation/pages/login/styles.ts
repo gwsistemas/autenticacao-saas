@@ -2,17 +2,6 @@ import { rgba } from 'polished'
 import styled from 'styled-components'
 import { Button } from '@/presentation/components'
 
-export const Page = styled.div`
-  display: flex;
-  margin: 0.75rem;
-  flex-wrap: wrap;
-  min-height: 100vh;
-  position: relative;
-  flex-direction: row;
-  align-items: center;
-  padding: 0rem 1.6rem;
-`
-
 export const IntroObject = styled.object`
   width: 100%;
   height: 525px;

@@ -1,14 +1,13 @@
 import React from 'react'
-import { Button, Column, Form, Input } from '@/presentation/components'
+import { Button, Column, Form, Page, Input } from '@/presentation/components'
 
 import {
-  Page,
-  Logo,
-  IntroObject,
-  Divider,
   Row,
+  Logo,
   Icones,
-  LinkButton
+  Divider,
+  LinkButton,
+  IntroObject
 } from './styles'
 
 const Login: React.FC = () => {
