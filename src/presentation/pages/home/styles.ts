@@ -53,7 +53,7 @@ export const Figcaption = styled.figcaption`
 `
 
 export const OrgList = styled.div`
-  padding: 0px 5rem;
+  padding: 0px 7rem;
 `
 
 export const OrgItem = styled.div`
@@ -94,4 +94,45 @@ export const OrgItem = styled.div`
       color: ${({ theme }) => theme.colors.primary.main};
     }
   }
+`
+
+export const Pagination = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
+
+  button {
+    width: 36px;
+    height: 36px;
+    min-height: 36px;
+    font-size: 1.3rem;
+    padding: 5px 12px;
+    border-radius: 4px;
+    color: ${({ theme }) => theme.colors.grey[900]};
+    border: 1px solid ${({ theme }) => theme.colors.grey.A50};
+    background-color:  ${({ theme }) => theme.colors.common.white};
+  }
+`
+
+export const PaginationList = styled.ul`
+  margin: 0px;
+  display: flex;
+  list-style: none;
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
+
+  li:nth-child(2) > p {
+    font-size: 2.3rem;
+    color: ${({ theme }) => theme.colors.grey[300]};
+  }
+`
+
+export const PaginationListItem = styled.li`
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `

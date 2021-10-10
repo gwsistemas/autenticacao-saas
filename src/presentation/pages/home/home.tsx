@@ -1,7 +1,7 @@
 import React from 'react'
-import { Column, Iframe, Logo, Page, Row } from '@/presentation/components'
+import { Button, Column, Iframe, Logo, Page, Row } from '@/presentation/components'
 
-import { Divider, Figcaption, Figure, OrgItem, OrgList, Title } from './styles'
+import { Divider, Figcaption, Figure, OrgItem, OrgList, Pagination, PaginationList, PaginationListItem, Title } from './styles'
 import { Typography } from '@/presentation/components/typography'
 
 const Home: React.FC = () => {
@@ -17,18 +17,24 @@ const Home: React.FC = () => {
           Selecione seu acesso
         </Title>
         <Row>
-          <Figure>
-            <i className="fas fa-user-tie" />
-            <Figcaption>Cliente</Figcaption>
-          </Figure>
-          <Figure>
-            <i className="far fa-handshake" />
-            <Figcaption>Representante</Figcaption>
-          </Figure>
-          <Figure>
-            <i className="fas fa-user-circle" />
-            <Figcaption>Colaborador</Figcaption>
-          </Figure>
+          <Button variant="text">
+            <Figure active>
+              <i className="fas fa-user-tie" />
+              <Figcaption>Cliente</Figcaption>
+            </Figure>
+          </Button>
+          <Button variant="text">
+            <Figure>
+              <i className="far fa-handshake" />
+              <Figcaption>Representante</Figcaption>
+            </Figure>
+          </Button>
+          <Button variant="text">
+            <Figure>
+              <i className="fas fa-user-circle" />
+              <Figcaption>Colaborador</Figcaption>
+            </Figure>
+          </Button>
         </Row>
         <Title>
           Selecione a organização desejada
@@ -50,6 +56,23 @@ const Home: React.FC = () => {
               <Typography>GWSISTEMAS QA</Typography>
               <i className="fas fa-user-tie" />
             </OrgItem>
+          </Column>
+          <Column>
+            <Pagination>
+              <Button disabled>{'<'}</Button>
+              <PaginationList>
+                <PaginationListItem>
+                  <Button active>1</Button>
+                </PaginationListItem>
+                <PaginationListItem>
+                  <Typography>/</Typography>
+                </PaginationListItem>
+                <PaginationListItem>
+                  <Button>2</Button>
+                </PaginationListItem>
+              </PaginationList>
+              <Button>{'>'}</Button>
+            </Pagination>
           </Column>
         </OrgList>
       </Column>
