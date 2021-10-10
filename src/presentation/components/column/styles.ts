@@ -6,7 +6,7 @@ export const Wrapper = styled.div<ColumnProps>`
   flex-basis: 0;
   display: flex;
   flex-shrink: 1;
-  padding: 0.75rem;
+  padding: 1.2rem;
   flex-direction: column;
 
   ${({ hideMobile }) => hideMobile && css`

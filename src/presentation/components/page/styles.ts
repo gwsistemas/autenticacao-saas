@@ -9,4 +9,8 @@ export const Wrapper = styled.div`
   flex-direction: row;
   align-items: center;
   padding: 0rem 1.6rem;
+
+  @media screen and (max-width: 968px) {
+    margin: 0px;
+  }
 `
