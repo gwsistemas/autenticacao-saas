@@ -18,13 +18,6 @@ export const Divider = styled.div`
   }
 `
 
-export const Row = styled.div`
-  display: flex;
-  align-items: center;
-  margin-bottom: 1.2rem;
-  justify-content: center;
-`
-
 export const LinkButton = styled(Button)`
   display: block;
   cursor: pointer;

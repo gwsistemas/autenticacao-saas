@@ -1,8 +1,7 @@
 import React from 'react'
-import { Button, Column, Logo, Form, Page, Input, Iframe } from '@/presentation/components'
+import { Button, Column, Logo, Form, Page, Input, Iframe, Row } from '@/presentation/components'
 
 import {
-  Row,
   Icones,
   Divider,
   LinkButton
