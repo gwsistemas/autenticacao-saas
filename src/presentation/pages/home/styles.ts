@@ -54,6 +54,10 @@ export const Figcaption = styled.figcaption`
 
 export const OrgList = styled.div`
   padding: 0px 7rem;
+
+  @media screen and (max-width: 968px) {
+    padding: 0px;
+  }
 `
 
 export const OrgItem = styled.div`
