@@ -34,10 +34,10 @@ export const InputBase = styled.input<Props>`
 
 export const InputWrapper = styled.div<InputBaseProps>`
   display: flex;
-  min-height: 68px;
   margin-bottom: 0.75rem;
   flex-direction: column;
   align-items: flex-start;
+  width: ${({ fullWidth }): string => (fullWidth && '100%') || 'auto'};
 
   ${({ error }) => error && css`
     ${InputBase} {

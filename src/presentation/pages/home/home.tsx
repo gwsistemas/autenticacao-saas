@@ -1,7 +1,7 @@
 import React from 'react'
-import { Button, Column, Iframe, Logo, Page, Row } from '@/presentation/components'
+import { Button, Column, Iframe, Input, Logo, Page, Row } from '@/presentation/components'
 
-import { Divider, Figcaption, Figure, OrgItem, OrgList, Pagination, PaginationList, PaginationListItem, Title } from './styles'
+import { Divider, Figcaption, Figure, OrgItem, OrgList, Pagination, PaginationList, PaginationListItem, Search, SearchIcon, Title } from './styles'
 import { Typography } from '@/presentation/components/typography'
 
 const Home: React.FC = () => {
@@ -35,6 +35,14 @@ const Home: React.FC = () => {
               <Figcaption>Colaborador</Figcaption>
             </Figure>
           </Button>
+        </Row>
+        <Row>
+          <Search>
+            <SearchIcon>
+              <i className="fas fa-search" />
+            </SearchIcon>
+            <Input fullWidth placeholder="Pesquise outras Organizações" />
+          </Search>
         </Row>
         <Title>
           Selecione a organização desejada
