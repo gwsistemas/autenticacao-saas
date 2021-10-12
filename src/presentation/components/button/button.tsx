@@ -11,8 +11,8 @@ const Button: React.FC<ButtonProps> = ({
   ...rest
 }: ButtonProps) => (
   <ButtonBase
-    {...rest}
     data-testid="button"
+    {...rest}
     color={color}
     variant={variant}
     isRounded={isRounded}
