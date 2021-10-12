@@ -1,23 +1,6 @@
-import { rgba } from 'polished'
 import styled, { css } from 'styled-components'
 
-import { FigureProps } from './types'
-
-export const Divider = styled.div`
-width: 2px;
-border: 0rem;
-height: 500px;
-background-image: linear-gradient(
-  to top,
-  ${({ theme }) => rgba(theme.colors.primary.main, 0.1)},
-  ${({ theme }) => theme.colors.primary.main},
-  ${({ theme }) => rgba(theme.colors.primary.main, 0.1)}
-);
-
-@media screen and (max-width: 968px) {
-  display: none;
-}
-`
+import { FigureProps, LiProps } from './types'
 
 export const Title = styled.h3`
   font-size: 1.6rem;
@@ -38,9 +21,11 @@ export const Figure = styled.figure<FigureProps>`
     font-size: 5rem;
     color: ${({ theme }) => theme.colors.grey[900]};
 
-    ${({ active }) => active && css`
-      color: ${({ theme }) => theme.colors.primary.main};
-    `}
+    ${({ active }) =>
+      active &&
+      css`
+        color: ${({ theme }) => theme.colors.primary.main};
+      `}
   }
 
   &:hover {
@@ -136,18 +121,6 @@ export const Pagination = styled.div`
   align-items: center;
   flex-direction: row;
   justify-content: space-between;
-
-  button {
-    width: 36px;
-    height: 36px;
-    min-height: 36px;
-    font-size: 1.3rem;
-    padding: 5px 12px;
-    border-radius: 4px;
-    color: ${({ theme }) => theme.colors.grey[900]};
-    border: 1px solid ${({ theme }) => theme.colors.grey.A50};
-    background-color:  ${({ theme }) => theme.colors.common.white};
-  }
 `
 
 export const PaginationList = styled.ul`
@@ -164,10 +137,38 @@ export const PaginationList = styled.ul`
   }
 `
 
-export const PaginationListItem = styled.li`
-  width: 38px;
-  height: 38px;
+export const PaginationButton = styled.li<LiProps>`
+  width: 36px;
+  height: 36px;
   display: flex;
+  cursor: pointer;
+  margin-left: 1rem;
+  font-size: 1.3rem;
   align-items: center;
+  border-radius: 0.4rem;
   justify-content: center;
+  color: ${({ theme }) => theme.colors.grey[900]};
+  border: 1px solid ${({ theme }) => theme.colors.grey.A50};
+
+  ${({ disabled }) =>
+    disabled &&
+    css`
+      opacity: 0.5;
+      cursor: not-allowed;
+      background-color: ${({ theme }) => theme.colors.grey[300]};
+    `}
+
+  ${({ active, theme }) =>
+    active &&
+    css`
+      color: ${theme.colors.secondary.contrastText};
+      background-color: ${theme.colors.secondary.main};
+    `}
+
+  &:nth-child(2) {
+    border: none;
+    cursor: default;
+    font-size: 2.3rem;
+    color: ${({ theme }) => theme.colors.grey[300]};
+  }
 `

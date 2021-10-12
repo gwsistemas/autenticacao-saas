@@ -1,7 +1,27 @@
 import React from 'react'
-import { Button, Column, Iframe, Input, Logo, Page, Row } from '@/presentation/components'
+import {
+  Button,
+  Column,
+  Iframe,
+  Input,
+  Image,
+  Page,
+  Row,
+  Divider,
+} from '@/presentation/components'
 
-import { Divider, Figcaption, Figure, OrgItem, OrgList, Pagination, PaginationList, PaginationListItem, Search, SearchIcon, Title } from './styles'
+import {
+  Figcaption,
+  Figure,
+  OrgItem,
+  OrgList,
+  Pagination,
+  PaginationList,
+  PaginationButton,
+  Search,
+  SearchIcon,
+  Title,
+} from './styles'
 import { Typography } from '@/presentation/components/typography'
 
 const Home: React.FC = () => {
@@ -12,10 +32,8 @@ const Home: React.FC = () => {
       </Column>
       <Divider />
       <Column data-testid="column-login">
-        <Logo url="/images/logo-gw-login-menor.png" alt="GW Logo" />
-        <Title>
-          Selecione seu acesso
-        </Title>
+        <Image src="/images/logo-gw-login-menor.png" alt="GW Image" />
+        <Title>Selecione seu acesso</Title>
         <Row>
           <Button variant="text">
             <Figure active>
@@ -44,42 +62,36 @@ const Home: React.FC = () => {
             <Input fullWidth placeholder="Pesquise outras Organizações" />
           </Search>
         </Row>
-        <Title>
-          Selecione a organização desejada
-        </Title>
+        <Title>Selecione a organização desejada</Title>
         <OrgList>
           <Column>
             <OrgItem>
-              <Logo url="/images/logo-gw-login-menor.png" alt="GW Logo" />
+              <Image src="/images/logo-gw-login-menor.png" />
               <Typography>GWSISTEMAS QA</Typography>
               <i className="fas fa-user-tie" />
             </OrgItem>
             <OrgItem>
-              <Logo url="/images/logo-gw-login-menor.png" alt="GW Logo" />
+              <Image src="/images/logo-gw-login-menor.png" />
               <Typography>GWSISTEMAS QA</Typography>
               <i className="fas fa-user-tie" />
             </OrgItem>
             <OrgItem>
-              <Logo url="/images/logo-gw-login-menor.png" alt="GW Logo" />
+              <Image src="/images/logo-gw-login-menor.png" />
               <Typography>GWSISTEMAS QA</Typography>
               <i className="fas fa-user-tie" />
             </OrgItem>
           </Column>
           <Column>
             <Pagination>
-              <Button disabled>{'<'}</Button>
+              <PaginationButton disabled>{'<'}</PaginationButton>
               <PaginationList>
-                <PaginationListItem>
-                  <Button active>1</Button>
-                </PaginationListItem>
-                <PaginationListItem>
+                <PaginationButton active>1</PaginationButton>
+                <PaginationButton>
                   <Typography>/</Typography>
-                </PaginationListItem>
-                <PaginationListItem>
-                  <Button>2</Button>
-                </PaginationListItem>
+                </PaginationButton>
+                <PaginationButton>2</PaginationButton>
               </PaginationList>
-              <Button>{'>'}</Button>
+              <PaginationButton>{'>'}</PaginationButton>
             </Pagination>
           </Column>
         </OrgList>
