@@ -1,6 +1,7 @@
 import { ButtonHTMLAttributes } from 'react'
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  active?: boolean
-  variant?: 'text' | 'contained'
+  isRounded?: boolean
+  color?: 'primary' | 'secondary'
+  variant?: 'text' | 'contained' | 'outlined'
 }
