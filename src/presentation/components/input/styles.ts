@@ -3,7 +3,7 @@ import { Props, InputBaseProps } from './types'
 
 export const Label = styled.label`
   display: block;
-  font-size: 1rem;
+  font-size: 1.6rem;
   color: ${({ theme }): string => theme.colors.common.black};
 `
 
@@ -16,7 +16,7 @@ export const HelpeText = styled.span`
 
 export const InputBase = styled.input<Props>`
   height: 36px;
-  font-size: 1rem;
+  font-size: 1.6rem;
   display: inline-block;
   padding: 0.5rem 0.9rem;
   border-radius: ${({ theme }): string => theme.borderRadius};
@@ -34,10 +34,10 @@ export const InputBase = styled.input<Props>`
 
 export const InputWrapper = styled.div<InputBaseProps>`
   display: flex;
-  min-height: 68px;
   margin-bottom: 0.75rem;
   flex-direction: column;
   align-items: flex-start;
+  width: ${({ fullWidth }): string => (fullWidth && '100%') || 'auto'};
 
   ${({ error }) => error && css`
     ${InputBase} {

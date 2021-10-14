@@ -13,6 +13,10 @@ export const defaultTheme: DefaultTheme = {
       main: '#00287c',
       contrastText: '#fff'
     },
+    secondary: {
+      main: '#3273dc',
+      contrastText: '#fff'
+    },
     error: {
       main: 'red'
     },

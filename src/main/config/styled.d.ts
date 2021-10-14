@@ -13,6 +13,10 @@ declare module 'styled-components' {
         main: string
         contrastText: string
       }
+      secondary: {
+        main: string
+        contrastText: string
+      }
       error: {
         main: string
       }
