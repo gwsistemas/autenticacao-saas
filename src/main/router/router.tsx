@@ -1,12 +1,13 @@
 import React from 'react'
-import { Login } from '@/presentation/pages'
+import { Home, Login } from '@/presentation/pages'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 
 const Router: React.FC = () => {
   return (
     <BrowserRouter>
       <Switch>
-        <Route path="/" component={Login} />
+        <Route exact path="/" component={Login} />
+        <Route path="/home" component={Home} />
       </Switch>
     </BrowserRouter>
   )
