@@ -1,7 +1,9 @@
 const path = require('path')
+// const { EnvironmentPlugin } = require('webpack')
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin')
-const webpack = require('webpack')
-const ReactRefreshTypeScript = require('react-refresh-typescript')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+// const webpack = require('webpack')
+// const ReactRefreshTypeScript = require('react-refresh-typescript')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const DashboardPlugin = require('webpack-dashboard/plugin')
 
@@ -28,14 +30,6 @@ module.exports = {
       {
         test: /\.ts(x?)$/,
         loader: require.resolve('ts-loader'),
-        options: {
-          getCustomTransformers: () => ({
-            before: isDevelopment ? [ReactRefreshTypeScript()] : []
-          }),
-          // `ts-loader` does not work with HMR unless `transpileOnly` is used.
-          // If you need type checking, `ForkTsCheckerWebpackPlugin` is an alternative.
-          transpileOnly: isDevelopment
-        },
         exclude: /node_modules/
       },
       {
@@ -61,6 +55,7 @@ module.exports = {
     contentBase: './public',
     writeToDisk: true,
     historyApiFallback: true,
+    hot: true,
     port: 8080,
     overlay: {
       errors: true,
@@ -73,8 +68,10 @@ module.exports = {
   },
   plugins: [
     new CleanWebpackPlugin(),
-    isDevelopment && new webpack.HotModuleReplacementPlugin(),
-    isDevelopment && new ReactRefreshWebpackPlugin(),
+    new HtmlWebpackPlugin({
+      template: path.resolve(__dirname, 'public', 'index.html')
+    }),
+    new ReactRefreshWebpackPlugin(),
     new DashboardPlugin()
   ].filter(Boolean)
 }
