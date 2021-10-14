@@ -9,7 +9,7 @@ export class ValidationComposite implements Validation {
     )
     for (const validator of validators) {
       const error = validator.validate(fieldValue)
-      if (error.message) {
+      if (error) {
         return error.message
       }
     }
