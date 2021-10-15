@@ -1,10 +1,17 @@
 import React from 'react'
-import { Button, Column, Image, Form, Page, Input, Iframe, Row, Divider } from '@/presentation/components'
-
 import {
-  Icones,
-  LinkButton
-} from './styles'
+  Button,
+  Column,
+  Image,
+  Form,
+  Page,
+  Input,
+  Iframe,
+  Row,
+  Divider,
+} from '@/presentation/components'
+
+import { Icones, LinkButton } from './styles'
 
 const Login: React.FC = () => {
   return (
@@ -30,7 +37,9 @@ const Login: React.FC = () => {
         </Form>
         <Row>
           <Column>
-            <LinkButton variant="text">Esqueceu a senha?</LinkButton>
+            <LinkButton variant="text" color="primary">
+              Esqueceu a senha?
+            </LinkButton>
           </Column>
           <Column>
             <LinkButton variant="text">Ainda não possui cadastro?</LinkButton>

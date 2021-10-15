@@ -32,6 +32,12 @@ export const ButtonBase = styled.button<ButtonProps>`
       (color === 'secondary' && theme.colors.secondary.main)};
     `}
 
+  ${({ theme, color, variant }) =>
+    variant === 'text' &&
+    css`
+      color: ${color === 'primary' && theme.colors.primary.main};
+    `}
+
   &:hover {
     color: ${({ theme, variant }) =>
       variant === 'text' && theme.colors.grey[900]};
