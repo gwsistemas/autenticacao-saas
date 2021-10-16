@@ -1,12 +1,72 @@
-import React from 'react'
-import { Button, Column, Image, Form, Page, Input, Iframe, Row, Divider } from '@/presentation/components'
-
+import React, { useState } from 'react'
 import {
-  Icones,
-  LinkButton
-} from './styles'
+  Button,
+  Column,
+  Image,
+  Form,
+  Page,
+  Input,
+  Iframe,
+  Row,
+  Divider
+} from '@/presentation/components'
 
-const Login: React.FC = () => {
+import { Icones, LinkButton } from './styles'
+import { Validation } from '@/presentation/protocols/validation'
+import { Authentication } from '@/domain/usecases'
+
+type Props = {
+  validation: Validation
+  authentication: Authentication
+}
+
+const Login: React.FC<Props> = ({ validation, authentication }: Props) => {
+  const [state, setState] = useState({
+    isLoading: false,
+    email: '',
+    password: '',
+    emailError: '',
+    passwordError: '',
+    mainError: ''
+  })
+
+  const handleValidation = (): void => {
+    setState((prevState) => ({
+      ...prevState,
+      emailError: validation.validate('email', prevState.email),
+      passwordError: validation.validate('password', prevState.password)
+    }))
+  }
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    const {
+      target: { name, value }
+    } = event
+    setState((prevState) => ({ ...prevState, [name]: value }))
+    handleValidation()
+  }
+
+  const handleSubmit = async (
+    event: React.FormEvent<HTMLFormElement>
+  ): Promise<void> => {
+    event.preventDefault()
+    if (!state.email || !state.password) {
+      handleValidation()
+      return
+    }
+    try {
+      const account = await authentication.auth({
+        email: state.email,
+        password: state.password
+      })
+      setState({ ...state, isLoading: true })
+
+      localStorage.setItem('user', JSON.stringify(account))
+    } catch (error) {
+      setState({ ...state, isLoading: false, mainError: error.message })
+    }
+  }
+
   return (
     <Page>
       <Column hideMobile data-testid="column-login">
@@ -15,17 +75,41 @@ const Login: React.FC = () => {
       <Divider />
       <Column data-testid="column-login">
         <Image src="/images/logo-gw-login-menor.png" alt="GW Image" />
-        <Form data-testid="form-login">
-          <Input fullWidth helpText="" label="E-mail" placeholder="Seu email" />
+        <Form data-testid="form-login" onSubmit={handleSubmit}>
+          <Input
+            fullWidth
+            placeholder="Seu email"
+            label="E-mail"
+            name="email"
+            id="email"
+            onChange={handleChange}
+            value={state.email}
+            error={!!state.emailError}
+            helpText={state.emailError}
+          />
           <br />
           <Input
             fullWidth
-            helpText=""
-            label="Senha"
             placeholder="Digite sua senha"
+            type="password"
+            label="Senha"
+            name="password"
+            id="password"
+            onChange={handleChange}
+            value={state.password}
+            error={!!state.passwordError}
+            helpText={state.passwordError}
           />
           <Row id="content-buttons">
-            <Button data-testid="submit">Login</Button>
+            <Button
+              type="submit"
+              disabled={
+                !!state.emailError || !!state.passwordError || state.isLoading
+              }
+              data-testid="submit"
+            >
+              {!state.isLoading ? 'Login' : 'Aguarde'}
+            </Button>
           </Row>
         </Form>
         <Row>
