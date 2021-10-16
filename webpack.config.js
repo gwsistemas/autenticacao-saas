@@ -1,9 +1,8 @@
 const path = require('path')
-// const { EnvironmentPlugin } = require('webpack')
+const { EnvironmentPlugin, DefinePlugin } = require('webpack')
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-// const webpack = require('webpack')
-// const ReactRefreshTypeScript = require('react-refresh-typescript')
+
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const DashboardPlugin = require('webpack-dashboard/plugin')
 
@@ -70,6 +69,13 @@ module.exports = {
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, 'public', 'index.html')
+    }),
+    new EnvironmentPlugin({
+      NODE_ENV: 'development',
+      DEBUG: false
+    }),
+    new DefinePlugin({
+      'process.env.API_URL': 'https://api.gwsistemas.com.br/api-gwsistemas-dev'
     }),
     new ReactRefreshWebpackPlugin(),
     new DashboardPlugin()
