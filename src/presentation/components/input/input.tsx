@@ -16,7 +16,13 @@ const Input: React.FC<Props> = ({
   return (
     <InputWrapper error={error} fullWidth={fullWidth}>
       <Label htmlFor={htmlFor || id}>{label}</Label>
-      <InputBase {...rest} id={id} name={name} data-testid="input" fullWidth={fullWidth} />
+      <InputBase
+        {...rest}
+        id={id}
+        name={name}
+        data-testid="input"
+        fullWidth={fullWidth}
+      />
       {helpText && <HelpeText data-testid="help-text">{helpText}</HelpeText>}
     </InputWrapper>
   )
