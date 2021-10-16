@@ -28,7 +28,7 @@ module.exports = {
     rules: [
       {
         test: /\.ts(x?)$/,
-        loader: require.resolve('ts-loader'),
+        loader: 'ts-loader',
         exclude: /node_modules/
       },
       {
@@ -51,15 +51,11 @@ module.exports = {
     ]
   },
   devServer: {
-    contentBase: './public',
+    contentBase: path.join(__dirname, 'public'),
     writeToDisk: true,
     historyApiFallback: true,
     hot: true,
-    port: 8080,
-    overlay: {
-      errors: true,
-      warnings: false
-    }
+    port: 8080
   },
   externals: {
     react: 'React',
@@ -70,14 +66,14 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, 'public', 'index.html')
     }),
+    isDevelopment && new ReactRefreshWebpackPlugin(),
     new EnvironmentPlugin({
       NODE_ENV: 'development',
       DEBUG: false
     }),
     new DefinePlugin({
-      'process.env.API_URL': 'https://api.gwsistemas.com.br/api-gwsistemas-dev'
+      'process.env.API_URL': JSON.stringify('https://fordevs.herokuapp.com/api')
     }),
-    new ReactRefreshWebpackPlugin(),
     new DashboardPlugin()
   ].filter(Boolean)
 }
