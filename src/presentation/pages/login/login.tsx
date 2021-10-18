@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
   Button,
   Column,
@@ -9,11 +9,16 @@ import {
   Iframe,
   Row,
   Divider,
+  Modal,
 } from '@/presentation/components'
 
 import { Icones, LinkButton } from './styles'
 
 const Login: React.FC = () => {
+  const [showModal, setToggleModal] = useState(false)
+
+  const handleToggleModal = () => setToggleModal(!showModal)
+
   return (
     <Page>
       <Column hideMobile data-testid="column-login">
@@ -37,7 +42,11 @@ const Login: React.FC = () => {
         </Form>
         <Row>
           <Column>
-            <LinkButton variant="text" color="primary">
+            <LinkButton
+              variant="text"
+              color="primary"
+              onClick={handleToggleModal}
+            >
               Esqueceu a senha?
             </LinkButton>
           </Column>
@@ -47,6 +56,7 @@ const Login: React.FC = () => {
         </Row>
         <Icones src="/images/icones-login-trans.png" />
       </Column>
+      <Modal isOpen={showModal} onClose={handleToggleModal} />
     </Page>
   )
 }

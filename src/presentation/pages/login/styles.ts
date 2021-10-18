@@ -5,6 +5,10 @@ export const LinkButton = styled(Button)`
   display: block;
   cursor: pointer;
   font-size: 1.6rem;
+
+  @media screen and (max-width: 968px) {
+    font-size: 1.3rem;
+  }
 `
 
 export const Icones = styled.img`
