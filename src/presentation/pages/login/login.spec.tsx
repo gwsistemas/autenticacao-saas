@@ -1,21 +1,35 @@
 import React from 'react'
+import faker from 'faker'
 import { cleanup, render, RenderResult } from '@/main/config/test-utils'
 
 import Login from './login'
+import { ValidationStub } from '@/presentation/test/mock-validation'
+import { AuthenticationSpy } from '@/presentation/test/mock-authentication'
 
 type SutTypes = {
   sut: RenderResult
+  validationStub: ValidationStub
+  authenticationSpy: AuthenticationSpy
+}
+type SutParams = {
+  validationError: string
 }
 
-const makeSut = (): SutTypes => {
-  const sut = render(<Login />)
-  return { sut }
+const makeSut = (params?: SutParams): SutTypes => {
+  const validationStub = new ValidationStub()
+  const authenticationSpy = new AuthenticationSpy()
+  const sut = render(
+    <Login validation={validationStub} authentication={authenticationSpy} />
+  )
+  validationStub.errorMessage = params.validationError
+  return { sut, validationStub, authenticationSpy }
 }
 
 describe('Login Component', () => {
   afterEach(cleanup)
   test('should start with initial state', () => {
-    const { sut } = makeSut()
+    const validationError = faker.random.word()
+    const { sut } = makeSut({ validationError })
 
     const columns = sut.getAllByTestId('column-login')
     columns.forEach((column) => {
