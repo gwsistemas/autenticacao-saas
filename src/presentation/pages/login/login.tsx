@@ -54,13 +54,18 @@ const Login: React.FC<Props> = ({ validation, authentication }: Props) => {
       handleValidation()
       return
     }
+
+    if (state.isLoading) {
+      return
+    }
+
     try {
+      setState({ ...state, isLoading: true })
       const account = await authentication.auth({
         email: state.email,
-        password: state.password
+        senha: state.password
       })
-      setState({ ...state, isLoading: true })
-
+      setState({ ...state, isLoading: false })
       localStorage.setItem('user', JSON.stringify(account))
     } catch (error) {
       setState({ ...state, isLoading: false, mainError: error.message })
