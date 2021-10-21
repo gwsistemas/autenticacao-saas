@@ -1,5 +1,5 @@
 import { CookieCacheClientSpy } from '@/data/test/mock-cache'
-import { LocalCacheStorage } from './local-cache-storage'
+import { LocalCacheStorage } from './cache-storage'
 
 interface SutTypes {
   sut: LocalCacheStorage
