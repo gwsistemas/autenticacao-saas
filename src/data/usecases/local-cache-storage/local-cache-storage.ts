@@ -7,7 +7,7 @@ export class LocalCacheStorage implements CacheStorage {
     return this.cacheClient.get(key, data)
   }
 
-  // set(key: string, value: string): void {
-  //   this.cacheClient.set(key, value)
-  // }
+  set(key: string, value: string): void {
+    this.cacheClient.set(key, value)
+  }
 }
