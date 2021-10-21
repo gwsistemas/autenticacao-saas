@@ -1,28 +1,15 @@
-import { CacheClient } from '@/data/protocols/cache'
+import { CookieCacheClientSpy } from '@/data/test/mock-cache'
 import { LocalCacheStorage } from './local-cache-storage'
-
-export class MockCookieCacheClient {
-  cookies = 'token=any_token; domain=https://localhost'
-}
-
-class CookieCacheClientSpy implements CacheClient<string | null> {
-  document = new MockCookieCacheClient()
-  get(key: string, client?: any): string {
-    return (
-      this.document.cookies.match(`(^|;)\\s*${key}\\s*=\\s*([^;]+)`)?.pop() ||
-      null
-    )
-  }
-}
 
 interface SutTypes {
   sut: LocalCacheStorage
+  cookieCacheClientSpy: CookieCacheClientSpy
 }
 
 const makeSut = (): SutTypes => {
   const cookieCacheClientSpy = new CookieCacheClientSpy()
   const sut = new LocalCacheStorage(cookieCacheClientSpy)
-  return { sut }
+  return { sut, cookieCacheClientSpy }
 }
 
 describe('LocalCacheStorage', () => {
@@ -35,5 +22,11 @@ describe('LocalCacheStorage', () => {
     const { sut } = makeSut()
     const error = sut.get('token')
     expect(error).toBe('any_token')
+  })
+  it('should [SET] method ', () => {
+    const { sut, cookieCacheClientSpy } = makeSut()
+    sut.set('jwt', 'another_any_token')
+    const result = cookieCacheClientSpy.get('jwt')
+    expect('another_any_token').toBe(result)
   })
 })
