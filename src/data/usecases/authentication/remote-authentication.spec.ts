@@ -8,17 +8,23 @@ import { Authentication } from '@/domain/usecases'
 
 interface SutTypes {
   sut: RemoteAuthentication
-  httpPostClientSpy: HttpClientPostSpy<Authentication.Params, Authentication.Model>
+  httpPostClientSpy: HttpClientPostSpy<
+  Authentication.Params,
+  Authentication.Model
+  >
 }
 
 const makeSut = (url: string = faker.internet.url()): SutTypes => {
-  const httpPostClientSpy = new HttpClientPostSpy<Authentication.Params, Authentication.Model>()
+  const httpPostClientSpy = new HttpClientPostSpy<
+  Authentication.Params,
+  Authentication.Model
+  >()
   const sut = new RemoteAuthentication(url, httpPostClientSpy)
   return { sut, httpPostClientSpy }
 }
 
 describe('RemoteAuthentication', () => {
-  test('should call HttpPostClient with correct URL', async () => {
+  it('should call HttpPostClient with correct URL', async () => {
     const url = 'other_url'
     const { sut, httpPostClientSpy } = makeSut(url)
     await sut.auth(mockAuthentication())
