@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import {
   Button,
   Column,
@@ -14,13 +15,19 @@ import {
 import { Icones, LinkButton } from './styles'
 import { Validation } from '@/presentation/protocols/validation'
 import { Authentication } from '@/domain/usecases'
+import { CacheClient } from '@/data/protocols/cache'
 
 type Props = {
   validation: Validation
   authentication: Authentication
+  localCache: CacheClient<string | null>
 }
 
-const Login: React.FC<Props> = ({ validation, authentication }: Props) => {
+const Login: React.FC<Props> = ({
+  validation,
+  authentication,
+  localCache
+}: Props) => {
   const [state, setState] = useState({
     isLoading: false,
     email: '',
@@ -29,6 +36,8 @@ const Login: React.FC<Props> = ({ validation, authentication }: Props) => {
     passwordError: '',
     mainError: ''
   })
+
+  const history = useHistory()
 
   const handleValidation = (): void => {
     setState((prevState) => ({
@@ -65,8 +74,9 @@ const Login: React.FC<Props> = ({ validation, authentication }: Props) => {
         email: state.email,
         senha: state.password
       })
+      localCache.set('client_token', account.token)
       setState({ ...state, isLoading: false })
-      localStorage.setItem('user', JSON.stringify(account))
+      history.push('/home')
     } catch (error) {
       setState({ ...state, isLoading: false, mainError: error.message })
     }
