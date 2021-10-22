@@ -7,7 +7,7 @@ import {
   Image,
   Page,
   Row,
-  Divider,
+  Divider
 } from '@/presentation/components'
 
 import {
@@ -20,7 +20,7 @@ import {
   PaginationButton,
   Search,
   SearchIcon,
-  Title,
+  Title
 } from './styles'
 import { Typography } from '@/presentation/components/typography'
 
