@@ -12,13 +12,13 @@ export const mockAccountModel = (): Authentication.Model => {
       min: 1,
       max: 50
     }),
-    active: faker.datatype.boolean(),
-    name: faker.datatype.string(),
-    lastName: faker.internet.userName(),
-    nickname: faker.internet.userName(),
-    birthdate: faker.internet.userName(),
+    ativo: faker.datatype.boolean(),
+    nome: faker.datatype.string(),
+    sobre_nome: faker.internet.userName(),
+    apelido: faker.internet.userName(),
+    data_nascimento: faker.internet.userName(),
     email: faker.internet.userName(),
-    password: faker.internet.userName(),
+    senha: faker.internet.userName(),
     token: faker.datatype.uuid(),
     guid: faker.datatype.uuid()
   }

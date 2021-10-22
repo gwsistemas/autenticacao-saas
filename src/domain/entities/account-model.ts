@@ -1,12 +1,12 @@
 export interface AccountModel {
   id: number
-  name: string
-  lastName: string
-  nickname: string
-  birthdate: string
+  nome: string
+  sobre_nome: string
+  apelido: string
+  data_nascimento: string
   email: string
-  password: string
+  senha: string
   token: string
-  active: boolean
+  ativo: boolean
   guid: string
 }
