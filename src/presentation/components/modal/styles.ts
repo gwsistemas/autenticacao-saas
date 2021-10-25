@@ -30,18 +30,19 @@ export const Container = styled.div<ModalProps>`
   border-radius: 0.4rem;
   flex-direction: column;
   justify-content: flex-start;
-  width: ${({ size }) => (size === 'sm' ? '30rem' : '75%')};
+  width: ${({ size }) => (size === 'sm' ? '30rem' : '90%')};
+  height: ${({ size }) => (size === 'sm' ? 'auto' : '95%')};
   background-color: ${({ theme }) => theme.colors.common.white};
 `
 
 export const Header = styled.header<ModalProps>`
   width: 100%;
+  height: 67px;
   display: flex;
   padding: 1rem;
-  align-items: center;
-  justify-content: center;
   box-shadow: 0px 1px 3px 0px rgb(0 31 232 / 20%);
-  height: ${({ size }) => (size === 'sm' ? '67px' : '60px')};
+  align-items: ${({ size }) => (size === 'sm' ? 'center' : 'flex-start')};
+  justify-content: ${({ size }) => (size === 'sm' ? 'center' : 'flex-start')};
 `
 
 export const Image = styled.img`

@@ -12,17 +12,23 @@ import {
   Modal,
 } from '@/presentation/components'
 
-import { Icones, LinkButton } from './styles'
+import { Icones, LinkButton, Title, Card, ContentButton } from './styles'
 
 const Login: React.FC = () => {
-  const [showModal, setToggleModal] = useState(false)
+  const [showRegisterModal, setRegisterModal] = useState(false)
+  const [showRecoveryModal, setRecoveryModal] = useState(false)
 
-  const handleToggleModal = () => setToggleModal(!showModal)
+  const handleRecoveryModal = () => setRecoveryModal(!showRecoveryModal)
+
+  const handleRegisterModal = () => setRegisterModal(!showRegisterModal)
 
   return (
     <Page>
       <Column hideMobile data-testid="column-login">
-        <Iframe data="https://gw-sas.s3.us-east-2.amazonaws.com/projeto-saas/templates/tela-login/anuncio-lado-esquerdo/infos-login.html" />
+        <Iframe
+          height="525px"
+          data="https://gw-sas.s3.us-east-2.amazonaws.com/projeto-saas/templates/tela-login/anuncio-lado-esquerdo/infos-login.html"
+        />
       </Column>
       <Divider />
       <Column data-testid="column-login">
@@ -45,18 +51,37 @@ const Login: React.FC = () => {
             <LinkButton
               variant="text"
               color="primary"
-              onClick={handleToggleModal}
+              onClick={handleRecoveryModal}
             >
               Esqueceu a senha?
             </LinkButton>
           </Column>
           <Column>
-            <LinkButton variant="text">Ainda não possui cadastro?</LinkButton>
+            <LinkButton variant="text" onClick={handleRegisterModal}>
+              Ainda não possui cadastro?
+            </LinkButton>
           </Column>
         </Row>
         <Icones src="/images/icones-login-trans.png" />
       </Column>
-      <Modal isOpen={showModal} onClose={handleToggleModal} />
+      <Modal isOpen={showRecoveryModal} onClose={handleRecoveryModal}>
+        <Title>Esqueceu a senha?</Title>
+        <Card>
+          <Input
+            fullWidth
+            helpText=""
+            label="Informe seu email:"
+            placeholder="Digite seu email"
+          />
+          <br />
+          <ContentButton>
+            <Button data-testid="submit">Recuperar conta</Button>
+          </ContentButton>
+        </Card>
+      </Modal>
+      <Modal size="xl" isOpen={showRegisterModal} onClose={handleRegisterModal}>
+        <Iframe data="https://gw-sas.s3.us-east-2.amazonaws.com/portal/recurso/HOM/index.html?stage=HOM" />
+      </Modal>
     </Page>
   )
 }

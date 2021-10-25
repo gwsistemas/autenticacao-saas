@@ -4,7 +4,7 @@ import { ButtonProps } from './types'
 
 export const ButtonBase = styled.button<ButtonProps>`
   cursor: pointer;
-  min-height: 47px;
+  min-height: 38px;
   font-size: 2.1rem;
   padding: 0.6rem 2.3rem;
   border-radius: ${({ isRounded }) => (isRounded ? '2.3rem' : '0.4rem')};
