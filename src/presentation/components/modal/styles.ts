@@ -15,13 +15,13 @@ export const Overlay = styled(Fixed)`
   background-color: ${({ theme }) => rgba(theme.colors.common.black, 0.6)};
 `
 
-export const Wrapper = styled(Fixed)`
+export const ModalWrapper = styled(Fixed)`
   display: flex;
   align-items: center;
   justify-content: center;
 `
 
-export const Container = styled.div<ModalProps>`
+export const ModalContainer = styled.div<ModalProps>`
   z-index: 9999;
   display: flex;
   min-height: 360px;
@@ -30,12 +30,12 @@ export const Container = styled.div<ModalProps>`
   border-radius: 0.4rem;
   flex-direction: column;
   justify-content: flex-start;
-  width: ${({ size }) => (size === 'sm' ? '30rem' : '90%')};
-  height: ${({ size }) => (size === 'sm' ? 'auto' : '95%')};
+  width: ${({ width }) => width || '30rem'};
+  height: ${({ height }) => height || 'auto'};
   background-color: ${({ theme }) => theme.colors.common.white};
 `
 
-export const Header = styled.header<ModalProps>`
+export const ModalHeader = styled.header<ModalProps>`
   width: 100%;
   height: 67px;
   display: flex;
@@ -49,7 +49,7 @@ export const Image = styled.img`
   width: 130px;
 `
 
-export const Content = styled.div`
+export const ModalContent = styled.div`
   flex: 1;
   width: 100%;
   padding: 1.5rem;

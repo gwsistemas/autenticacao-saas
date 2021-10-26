@@ -1,9 +1,18 @@
 import React from 'react'
 
 import { ModalProps } from './types'
-import { Container, Header, Overlay, Image, Wrapper, Content } from './styles'
+import {
+  Overlay,
+  Image,
+  ModalHeader,
+  ModalWrapper,
+  ModalContent,
+  ModalContainer,
+} from './styles'
 
 const Modal: React.FC<ModalProps> = ({
+  width,
+  height,
   onClose,
   children,
   size = 'sm',
@@ -12,15 +21,15 @@ const Modal: React.FC<ModalProps> = ({
   if (!isOpen) return null
 
   return (
-    <Wrapper>
+    <ModalWrapper>
       <Overlay onClick={onClose} />
-      <Container size={size}>
-        <Header size={size}>
+      <ModalContainer width={width} height={height}>
+        <ModalHeader size={size}>
           <Image src="/images/logo-gw-login-menor.png" alt="GW Image" />
-        </Header>
-        <Content>{children}</Content>
-      </Container>
-    </Wrapper>
+        </ModalHeader>
+        <ModalContent>{children}</ModalContent>
+      </ModalContainer>
+    </ModalWrapper>
   )
 }
 

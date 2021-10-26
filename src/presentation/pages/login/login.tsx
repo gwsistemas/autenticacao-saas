@@ -18,9 +18,9 @@ const Login: React.FC = () => {
   const [showRegisterModal, setRegisterModal] = useState(false)
   const [showRecoveryModal, setRecoveryModal] = useState(false)
 
-  const handleRecoveryModal = () => setRecoveryModal(!showRecoveryModal)
+  const handleRecoveryModal = (): void => setRecoveryModal(!showRecoveryModal)
 
-  const handleRegisterModal = () => setRegisterModal(!showRegisterModal)
+  const handleRegisterModal = (): void => setRegisterModal(!showRegisterModal)
 
   return (
     <Page>
@@ -64,7 +64,12 @@ const Login: React.FC = () => {
         </Row>
         <Icones src="/images/icones-login-trans.png" />
       </Column>
-      <Modal isOpen={showRecoveryModal} onClose={handleRecoveryModal}>
+      <Modal
+        width="30rem"
+        height="auto"
+        isOpen={showRecoveryModal}
+        onClose={handleRecoveryModal}
+      >
         <Title>Esqueceu a senha?</Title>
         <Card>
           <Input
@@ -79,7 +84,13 @@ const Login: React.FC = () => {
           </ContentButton>
         </Card>
       </Modal>
-      <Modal size="xl" isOpen={showRegisterModal} onClose={handleRegisterModal}>
+      <Modal
+        size="xl"
+        width="90%"
+        height="95%"
+        isOpen={showRegisterModal}
+        onClose={handleRegisterModal}
+      >
         <Iframe data="https://gw-sas.s3.us-east-2.amazonaws.com/portal/recurso/HOM/index.html?stage=HOM" />
       </Modal>
     </Page>
