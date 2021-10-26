@@ -129,7 +129,9 @@ const Login: React.FC<Props> = ({
         </Form>
         <Row>
           <Column>
-            <LinkButton variant="text">Esqueceu a senha?</LinkButton>
+            <LinkButton variant="text" color="primary">
+              Esqueceu a senha?
+            </LinkButton>
           </Column>
           <Column>
             <LinkButton variant="text">Ainda não possui cadastro?</LinkButton>
