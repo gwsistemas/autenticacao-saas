@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
+import { useRecoilValue } from 'recoil'
 import {
   Button,
   Column,
@@ -9,25 +10,20 @@ import {
   Input,
   Iframe,
   Row,
-  Divider
+  Divider,
+  currentAccountState
 } from '@/presentation/components'
 
 import { Icones, LinkButton } from './styles'
 import { Validation } from '@/presentation/protocols/validation'
 import { Authentication } from '@/domain/usecases'
-import { CacheClient } from '@/data/protocols/cache'
 
 type Props = {
   validation: Validation
   authentication: Authentication
-  localCache: CacheClient<string | null>
 }
 
-const Login: React.FC<Props> = ({
-  validation,
-  authentication,
-  localCache
-}: Props) => {
+const Login: React.FC<Props> = ({ validation, authentication }: Props) => {
   const [state, setState] = useState({
     isLoading: false,
     email: '',
@@ -36,6 +32,7 @@ const Login: React.FC<Props> = ({
     passwordError: '',
     mainError: ''
   })
+  const { setCurrentAccount } = useRecoilValue(currentAccountState)
 
   const history = useHistory()
 
@@ -74,7 +71,7 @@ const Login: React.FC<Props> = ({
         email: state.email,
         senha: state.password
       })
-      localCache.set('client_token', account.token)
+      setCurrentAccount(account)
       setState({ ...state, isLoading: false })
       history.push('/home')
     } catch (error) {

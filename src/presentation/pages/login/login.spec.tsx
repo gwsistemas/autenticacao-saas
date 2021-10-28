@@ -5,7 +5,6 @@ import { cleanup, render, RenderResult } from '@/main/config/test-utils'
 import Login from './login'
 import { ValidationStub } from '@/presentation/test/mock-validation'
 import { AuthenticationSpy } from '@/presentation/test/mock-authentication'
-import { CookieCacheClientSpy } from '@/data/test/mock-cache'
 
 type SutTypes = {
   sut: RenderResult
@@ -19,13 +18,8 @@ type SutParams = {
 const makeSut = (params?: SutParams): SutTypes => {
   const validationStub = new ValidationStub()
   const authenticationSpy = new AuthenticationSpy()
-  const cookieCacheClientSpy = new CookieCacheClientSpy()
   const sut = render(
-    <Login
-      validation={validationStub}
-      authentication={authenticationSpy}
-      localCache={cookieCacheClientSpy}
-    />
+    <Login validation={validationStub} authentication={authenticationSpy} />
   )
   validationStub.errorMessage = params.validationError
   return { sut, validationStub, authenticationSpy }
