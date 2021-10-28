@@ -27,7 +27,10 @@ describe('AxiosHttpClient', () => {
   it('should call axios with correct url, body and verb', async () => {
     const { sut, mockedAxios, mockRequest } = makeSut()
     await sut.post(mockRequest)
-    expect(mockedAxios.post).toHaveBeenCalledWith(mockRequest.url, mockRequest.body)
+    expect(mockedAxios.post).toHaveBeenCalledWith(
+      mockRequest.url,
+      mockRequest.body
+    )
   })
   it('should return the correct statusCode and body', () => {
     const { sut, mockedAxios, mockRequest } = makeSut()

@@ -6,8 +6,8 @@ export class RemoteAuthentication implements Authentication {
   constructor(
     private readonly url: string,
     private readonly httpPostClient: HttpPostClient<
-    Authentication.Params,
-    Authentication.Model
+      Authentication.Params,
+      Authentication.Model
     >
   ) {}
 
