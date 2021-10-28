@@ -6,15 +6,18 @@
   },
   "extends": [
     "standard-with-typescript",
-    "plugin:react/recommended"
+    "plugin:react/recommended",
+    "prettier"
   ],
   "plugins": [
-    "react"
+    "react",
+    "prettier"
   ],
   "parserOptions": {
     "project": "./tsconfig.json"
   },
   "rules": {
+    "prettier/prettier": "error",
     "comma-dangle":"off",
     "@typescript-eslint/consistent-type-definitions": "off",
     "@typescript-eslint/strict-boolean-expressions": "off",
