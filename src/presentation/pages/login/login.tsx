@@ -11,10 +11,11 @@ import {
   Iframe,
   Row,
   Divider,
-  FormStatus
+  FormStatus,
+  Modal
 } from '@/presentation/components'
 
-import { Icones, LinkButton } from './styles'
+import { Title, Card, ContentButton, Icones, LinkButton } from './styles'
 import { Validation } from '@/presentation/protocols/validation'
 import { Authentication } from '@/domain/usecases'
 import { currentAccountState } from '@/presentation/state-management/atoms'
@@ -25,6 +26,8 @@ type Props = {
 }
 
 const Login: React.FC<Props> = ({ validation, authentication }: Props) => {
+  const [showRegisterModal, setRegisterModal] = useState(false)
+  const [showRecoveryModal, setRecoveryModal] = useState(false)
   const [state, setState] = useState({
     isLoading: false,
     email: '',
@@ -34,6 +37,10 @@ const Login: React.FC<Props> = ({ validation, authentication }: Props) => {
     mainError: ''
   })
   const { setCurrentAccount } = useRecoilValue(currentAccountState)
+
+  const handleRecoveryModal = (): void => setRecoveryModal(!showRecoveryModal)
+
+  const handleRegisterModal = (): void => setRegisterModal(!showRegisterModal)
 
   const history = useHistory()
 
@@ -83,7 +90,10 @@ const Login: React.FC<Props> = ({ validation, authentication }: Props) => {
   return (
     <Page>
       <Column hideMobile data-testid="column-login">
-        <Iframe data="https://gw-sas.s3.us-east-2.amazonaws.com/projeto-saas/templates/tela-login/anuncio-lado-esquerdo/infos-login.html" />
+        <Iframe
+          height="525px"
+          data="https://gw-sas.s3.us-east-2.amazonaws.com/projeto-saas/templates/tela-login/anuncio-lado-esquerdo/infos-login.html"
+        />
       </Column>
       <Divider />
       <Column data-testid="column-login">
@@ -130,16 +140,51 @@ const Login: React.FC<Props> = ({ validation, authentication }: Props) => {
         </Form>
         <Row>
           <Column>
-            <LinkButton variant="text" color="primary">
+            <LinkButton
+              variant="text"
+              color="primary"
+              onClick={handleRecoveryModal}
+            >
               Esqueceu a senha?
             </LinkButton>
           </Column>
           <Column>
-            <LinkButton variant="text">Ainda não possui cadastro?</LinkButton>
+            <LinkButton variant="text" onClick={handleRegisterModal}>
+              Ainda não possui cadastro?
+            </LinkButton>
           </Column>
         </Row>
         <Icones src="/images/icones-login-trans.png" />
       </Column>
+      <Modal
+        width="30rem"
+        height="auto"
+        isOpen={showRecoveryModal}
+        onClose={handleRecoveryModal}
+      >
+        <Title>Esqueceu a senha?</Title>
+        <Card>
+          <Input
+            fullWidth
+            helpText=""
+            label="Informe seu email:"
+            placeholder="Digite seu email"
+          />
+          <br />
+          <ContentButton>
+            <Button data-testid="submit">Recuperar conta</Button>
+          </ContentButton>
+        </Card>
+      </Modal>
+      <Modal
+        size="xl"
+        width="90%"
+        height="95%"
+        isOpen={showRegisterModal}
+        onClose={handleRegisterModal}
+      >
+        <Iframe data="https://gw-sas.s3.us-east-2.amazonaws.com/portal/recurso/HOM/index.html?stage=HOM" />
+      </Modal>
     </Page>
   )
 }

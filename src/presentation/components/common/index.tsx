@@ -44,7 +44,7 @@ export const Row = styled.div`
 
 export const Iframe = styled.object<IframeProps>`
   width: 100%;
-  height: 525px;
+  height: ${({ height }) => height || '100%'};
 `
 
 export const Form = styled.form`

@@ -6,4 +6,5 @@ export interface ColumnProps extends HTMLAttributes<HTMLDivElement> {
 
 export interface IframeProps extends HTMLAttributes<HTMLObjectElement> {
   data: string
+  height?: string
 }
