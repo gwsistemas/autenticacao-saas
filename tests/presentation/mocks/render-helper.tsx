@@ -7,6 +7,7 @@ import { render } from '@testing-library/react'
 import { mockAccountModel } from '@/tests/domain/mocks'
 import { AccountModel } from '@/domain/entities'
 import { currentAccountState } from '@/presentation/state-management/atoms'
+import ThemeProvider from '@/main/providers/theme-provider'
 
 type Params = {
   Page: React.FC
@@ -37,9 +38,11 @@ export const renderWithHistory = ({
   }
   render(
     <RecoilRoot initializeState={initializeState}>
-      <Router history={history}>
-        <Page />
-      </Router>
+      <ThemeProvider>
+        <Router history={history}>
+          <Page />
+        </Router>
+      </ThemeProvider>
     </RecoilRoot>
   )
   return {
