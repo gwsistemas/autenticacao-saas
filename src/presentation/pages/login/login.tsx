@@ -10,13 +10,13 @@ import {
   Input,
   Iframe,
   Row,
-  Divider,
-  currentAccountState
+  Divider
 } from '@/presentation/components'
 
 import { Icones, LinkButton } from './styles'
 import { Validation } from '@/presentation/protocols/validation'
 import { Authentication } from '@/domain/usecases'
+import { currentAccountState } from '@/presentation/state-management/atoms'
 
 type Props = {
   validation: Validation
