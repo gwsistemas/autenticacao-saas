@@ -82,3 +82,10 @@ export const Divider = styled.div`
     display: none;
   }
 `
+
+export const FormStatus = styled.div`
+  display: block;
+  font-size: 1.3rem;
+  margin-top: 0.2rem;
+  color: ${({ theme }): string => theme.colors.error.main};
+`
