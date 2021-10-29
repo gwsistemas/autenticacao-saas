@@ -4,7 +4,7 @@ import {
   setCurrentAccountAdapter,
   getCurrentAccountAdapter
 } from '../adapters/current-account-adapter'
-import { currentAccountState } from '@/presentation/components'
+import { currentAccountState } from '@/presentation/state-management/atoms'
 
 type Props = {
   children: React.ReactNode
