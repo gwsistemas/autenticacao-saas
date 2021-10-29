@@ -5,7 +5,7 @@ import { MutableSnapshot, RecoilRoot, RecoilState } from 'recoil'
 import { render } from '@testing-library/react'
 
 import { mockAccountModel } from '@/tests/domain/mocks'
-import { AccountModel } from '@/domain/entities'
+import { AccountModel } from '@/domain/models'
 import { currentAccountState } from '@/presentation/state-management/atoms'
 import ThemeProvider from '@/main/providers/theme-provider'
 
