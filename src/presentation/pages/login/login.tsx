@@ -10,7 +10,8 @@ import {
   Input,
   Iframe,
   Row,
-  Divider
+  Divider,
+  FormStatus
 } from '@/presentation/components'
 
 import { Icones, LinkButton } from './styles'
@@ -72,7 +73,7 @@ const Login: React.FC<Props> = ({ validation, authentication }: Props) => {
         senha: state.password
       })
       setCurrentAccount(account)
-      setState({ ...state, isLoading: false })
+      setState({ ...state, isLoading: false, mainError: '' })
       history.push('/home')
     } catch (error) {
       setState({ ...state, isLoading: false, mainError: error.message })
@@ -88,30 +89,33 @@ const Login: React.FC<Props> = ({ validation, authentication }: Props) => {
       <Column data-testid="column-login">
         <Image src="/images/logo-gw-login-menor.png" alt="GW Image" />
         <Form data-testid="form-login" onSubmit={handleSubmit}>
-          <Input
-            fullWidth
-            placeholder="Seu email"
-            label="E-mail"
-            name="email"
-            id="email"
-            onChange={handleChange}
-            value={state.email}
-            error={!!state.emailError}
-            helpText={state.emailError}
-          />
-          <br />
-          <Input
-            fullWidth
-            placeholder="Digite sua senha"
-            type="password"
-            label="Senha"
-            name="password"
-            id="password"
-            onChange={handleChange}
-            value={state.password}
-            error={!!state.passwordError}
-            helpText={state.passwordError}
-          />
+          <div>
+            <Input
+              fullWidth
+              placeholder="Seu email"
+              label="E-mail"
+              name="email"
+              id="email"
+              onChange={handleChange}
+              value={state.email}
+              error={!!state.emailError}
+              helpText={state.emailError}
+            />
+            <br />
+            <Input
+              fullWidth
+              placeholder="Digite sua senha"
+              type="password"
+              label="Senha"
+              name="password"
+              id="password"
+              onChange={handleChange}
+              value={state.password}
+              error={!!state.passwordError}
+              helpText={state.passwordError}
+            />
+          </div>
+          {!!state.mainError && <FormStatus>{state.mainError}</FormStatus>}
           <Row id="content-buttons">
             <Button
               type="submit"
