@@ -1,4 +1,4 @@
-import { AccountModel } from '../entities'
+import { AccountModel } from '../models'
 export interface Authentication {
   auth: (params: Authentication.Params) => Promise<Authentication.Model>
 }
@@ -6,7 +6,7 @@ export interface Authentication {
 export namespace Authentication {
   export type Params = {
     email: string
-    password: string
+    senha: string
   }
   export type Model = AccountModel
 }

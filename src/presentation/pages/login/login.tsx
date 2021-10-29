@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import { useHistory } from 'react-router-dom'
+import { useRecoilValue } from 'recoil'
 import {
   Button,
   Column,
@@ -9,18 +11,81 @@ import {
   Iframe,
   Row,
   Divider,
-  Modal,
+  FormStatus,
+  Modal
 } from '@/presentation/components'
 
-import { Icones, LinkButton, Title, Card, ContentButton } from './styles'
+import { Title, Card, ContentButton, Icones, LinkButton } from './styles'
+import { Validation } from '@/presentation/protocols/validation'
+import { Authentication } from '@/domain/usecases'
+import { currentAccountState } from '@/presentation/state-management/atoms'
 
-const Login: React.FC = () => {
+type Props = {
+  validation: Validation
+  authentication: Authentication
+}
+
+const Login: React.FC<Props> = ({ validation, authentication }: Props) => {
   const [showRegisterModal, setRegisterModal] = useState(false)
   const [showRecoveryModal, setRecoveryModal] = useState(false)
+  const [state, setState] = useState({
+    isLoading: false,
+    email: '',
+    password: '',
+    emailError: '',
+    passwordError: '',
+    mainError: ''
+  })
+  const { setCurrentAccount } = useRecoilValue(currentAccountState)
 
   const handleRecoveryModal = (): void => setRecoveryModal(!showRecoveryModal)
 
   const handleRegisterModal = (): void => setRegisterModal(!showRegisterModal)
+
+  const history = useHistory()
+
+  const handleValidation = (): void => {
+    setState((prevState) => ({
+      ...prevState,
+      emailError: validation.validate('email', prevState.email),
+      passwordError: validation.validate('password', prevState.password)
+    }))
+  }
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    const {
+      target: { name, value }
+    } = event
+    setState((prevState) => ({ ...prevState, [name]: value }))
+    handleValidation()
+  }
+
+  const handleSubmit = async (
+    event: React.FormEvent<HTMLFormElement>
+  ): Promise<void> => {
+    event.preventDefault()
+    if (!state.email || !state.password) {
+      handleValidation()
+      return
+    }
+
+    if (state.isLoading) {
+      return
+    }
+
+    try {
+      setState({ ...state, isLoading: true })
+      const account = await authentication.auth({
+        email: state.email,
+        senha: state.password
+      })
+      setCurrentAccount(account)
+      setState({ ...state, isLoading: false, mainError: '' })
+      history.push('/home')
+    } catch (error) {
+      setState({ ...state, isLoading: false, mainError: error.message })
+    }
+  }
 
   return (
     <Page>
@@ -33,17 +98,44 @@ const Login: React.FC = () => {
       <Divider />
       <Column data-testid="column-login">
         <Image src="/images/logo-gw-login-menor.png" alt="GW Image" />
-        <Form data-testid="form-login">
-          <Input fullWidth helpText="" label="E-mail" placeholder="Seu email" />
-          <br />
-          <Input
-            fullWidth
-            helpText=""
-            label="Senha"
-            placeholder="Digite sua senha"
-          />
+        <Form data-testid="form-login" onSubmit={handleSubmit}>
+          <div>
+            <Input
+              fullWidth
+              placeholder="Seu email"
+              label="E-mail"
+              name="email"
+              id="email"
+              onChange={handleChange}
+              value={state.email}
+              error={!!state.emailError}
+              helpText={state.emailError}
+            />
+            <br />
+            <Input
+              fullWidth
+              placeholder="Digite sua senha"
+              type="password"
+              label="Senha"
+              name="password"
+              id="password"
+              onChange={handleChange}
+              value={state.password}
+              error={!!state.passwordError}
+              helpText={state.passwordError}
+            />
+          </div>
+          {!!state.mainError && <FormStatus>{state.mainError}</FormStatus>}
           <Row id="content-buttons">
-            <Button data-testid="submit">Login</Button>
+            <Button
+              type="submit"
+              disabled={
+                !!state.emailError || !!state.passwordError || state.isLoading
+              }
+              data-testid="submit"
+            >
+              {!state.isLoading ? 'Login' : 'Aguarde'}
+            </Button>
           </Row>
         </Form>
         <Row>

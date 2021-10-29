@@ -1,5 +1,5 @@
 type Color = {
-  [prop in number | string]: string;
+  [prop in number | string]: string
 }
 
 export const grey: Color = {

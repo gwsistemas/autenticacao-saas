@@ -39,14 +39,16 @@ export const InputWrapper = styled.div<InputBaseProps>`
   align-items: flex-start;
   width: ${({ fullWidth }): string => (fullWidth && '100%') || 'auto'};
 
-  ${({ error }) => error && css`
-    ${InputBase} {
-      border-color: ${({ theme }): string => theme.colors.error.main};
-    }
-    ${HelpeText}, ${Label}, ${InputBase} {
-      color: ${({ theme }): string => theme.colors.error.main};
-    }
-  `}
+  ${({ error }) =>
+    error &&
+    css`
+      ${InputBase} {
+        border-color: ${({ theme }): string => theme.colors.error.main};
+      }
+      ${HelpeText}, ${Label}, ${InputBase} {
+        color: ${({ theme }): string => theme.colors.error.main};
+      }
+    `}
 
   ${Label}, ${HelpeText} {
     margin-bottom: 0.8rem;

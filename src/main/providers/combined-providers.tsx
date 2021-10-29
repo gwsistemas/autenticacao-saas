@@ -1,8 +1,9 @@
 /* eslint-disable react/display-name */
 import React, { ComponentProps, FC } from 'react'
 import ThemeProvider from './theme-provider'
+import RecoilProvider from './recoil-provider'
 
-const providers = [ThemeProvider]
+const providers = [RecoilProvider, ThemeProvider]
 
 const combineComponents = (...components: FC[]): FC => {
   return components.reduce(

@@ -7,7 +7,7 @@ import {
   ModalHeader,
   ModalWrapper,
   ModalContent,
-  ModalContainer,
+  ModalContainer
 } from './styles'
 
 const Modal: React.FC<ModalProps> = ({
@@ -16,7 +16,7 @@ const Modal: React.FC<ModalProps> = ({
   onClose,
   children,
   size = 'sm',
-  isOpen = false,
+  isOpen = false
 }: ModalProps) => {
   if (!isOpen) return null
 

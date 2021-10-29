@@ -1,7 +1,8 @@
 const path = require('path')
+const { EnvironmentPlugin, DefinePlugin } = require('webpack')
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin')
-const webpack = require('webpack')
-const ReactRefreshTypeScript = require('react-refresh-typescript')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const DashboardPlugin = require('webpack-dashboard/plugin')
 
@@ -13,7 +14,7 @@ module.exports = {
   mode: 'development',
   entry: './src/main/index.tsx',
   output: {
-    path: path.join(__dirname, 'public/js'),
+    path: path.resolve(__dirname, 'public/js'),
     publicPath: '/public/js',
     filename: 'bundle.js'
   },
@@ -27,15 +28,7 @@ module.exports = {
     rules: [
       {
         test: /\.ts(x?)$/,
-        loader: require.resolve('ts-loader'),
-        options: {
-          getCustomTransformers: () => ({
-            before: isDevelopment ? [ReactRefreshTypeScript()] : []
-          }),
-          // `ts-loader` does not work with HMR unless `transpileOnly` is used.
-          // If you need type checking, `ForkTsCheckerWebpackPlugin` is an alternative.
-          transpileOnly: isDevelopment
-        },
+        loader: 'ts-loader',
         exclude: /node_modules/
       },
       {
@@ -57,15 +50,13 @@ module.exports = {
       }
     ]
   },
+  devtool: 'source-map',
   devServer: {
-    contentBase: './public',
+    contentBase: path.join(__dirname, 'public'),
     writeToDisk: true,
     historyApiFallback: true,
-    port: 8080,
-    overlay: {
-      errors: true,
-      warnings: false
-    }
+    hot: true,
+    port: 8080
   },
   externals: {
     react: 'React',
@@ -73,8 +64,17 @@ module.exports = {
   },
   plugins: [
     new CleanWebpackPlugin(),
-    isDevelopment && new webpack.HotModuleReplacementPlugin(),
+    new HtmlWebpackPlugin({
+      template: path.resolve(__dirname, 'public', 'index.html')
+    }),
     isDevelopment && new ReactRefreshWebpackPlugin(),
+    new EnvironmentPlugin({
+      NODE_ENV: 'development',
+      DEBUG: false
+    }),
+    new DefinePlugin({
+      'process.env.API_URL': JSON.stringify('https://fordevs.herokuapp.com/api')
+    }),
     new DashboardPlugin()
   ].filter(Boolean)
 }

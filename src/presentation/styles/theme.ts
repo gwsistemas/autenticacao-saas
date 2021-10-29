@@ -40,10 +40,7 @@ export const defaultTheme: DefaultTheme = {
       lineHeight: 1.5
     }
   },
-  shadows: [
-    'none',
-    '0 1px 2px rgb(10 10 10 / 10%)'
-  ],
+  shadows: ['none', '0 1px 2px rgb(10 10 10 / 10%)'],
   text: {
     primary: '#363636',
     secondary: '#222',

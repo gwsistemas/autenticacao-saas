@@ -1,4 +1,5 @@
 import React from 'react'
+import { useRecoilValue } from 'recoil'
 import {
   Button,
   Column,
@@ -7,8 +8,9 @@ import {
   Image,
   Page,
   Row,
-  Divider,
+  Divider
 } from '@/presentation/components'
+import { currentAccountState } from '@/presentation/state-management/atoms'
 
 import {
   Figcaption,
@@ -20,11 +22,13 @@ import {
   PaginationButton,
   Search,
   SearchIcon,
-  Title,
+  Title
 } from './styles'
 import { Typography } from '@/presentation/components/typography'
 
 const Home: React.FC = () => {
+  const { getCurrentAccount } = useRecoilValue(currentAccountState)
+  console.log(getCurrentAccount()?.token)
   return (
     <Page>
       <Column hideMobile data-testid="column-home">

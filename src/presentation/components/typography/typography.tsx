@@ -7,10 +7,20 @@ const defaultVariantMapping = {
   body1: 'p'
 }
 
-const Typography: React.FC<Props> = ({ variant = 'body1', color = 'default', component, ...rest }: Props) => {
+const Typography: React.FC<Props> = ({
+  variant = 'body1',
+  color = 'default',
+  component,
+  ...rest
+}: Props) => {
   const componentType = component || defaultVariantMapping[variant] || 'p'
   return (
-    <TypographyBase as={componentType} variant={variant} color={color} {...rest} />
+    <TypographyBase
+      as={componentType}
+      variant={variant}
+      color={color}
+      {...rest}
+    />
   )
 }
 

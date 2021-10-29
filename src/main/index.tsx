@@ -6,5 +6,6 @@ import { Providers } from '@/main/providers'
 ReactDom.render(
   <Providers>
     <Router />
-  </Providers>
-  , document.getElementById('main'))
+  </Providers>,
+  document.getElementById('main')
+)
