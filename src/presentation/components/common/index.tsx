@@ -51,7 +51,7 @@ export const Form = styled.form`
   padding: 0rem 7.5rem 2rem 7.5rem;
 
   #content-buttons {
-    margin-top: 4rem;
+    margin-top: 2.5rem;
     margin-bottom: 0rem;
   }
 
