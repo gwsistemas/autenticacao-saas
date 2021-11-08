@@ -1,7 +1,7 @@
 import { CommonReturn } from '../models'
 
 export interface ForgetPassword {
-  send: (params: ForgetPassword.Params) => Promise<string>
+  send: (params: ForgetPassword.Params) => Promise<ForgetPassword.Model>
 }
 
 export namespace ForgetPassword {

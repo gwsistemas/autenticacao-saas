@@ -2,7 +2,7 @@ import { HttpPostClient, HttpStatusCode } from '@/data/protocols/http'
 import { ForgetPasswordError, UnexpectedError } from '@/domain/errors'
 import { ForgetPassword } from '@/domain/usecases'
 
-export class RemoteForgetPasword {
+export class RemoteForgetPasword implements ForgetPassword {
   constructor(
     private readonly url: string,
     private readonly httpPostClient: HttpPostClient<

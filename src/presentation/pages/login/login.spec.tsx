@@ -5,6 +5,7 @@ import { cleanup, render, RenderResult } from '@/main/config/test-utils'
 import Login from './login'
 import { ValidationStub } from '@/presentation/test/mock-validation'
 import { AuthenticationSpy } from '@/presentation/test/mock-authentication'
+import { ForgetPasswordSpy } from '@/presentation/test/mock-forget-password'
 
 type SutTypes = {
   sut: RenderResult
@@ -18,8 +19,13 @@ type SutParams = {
 const makeSut = (params?: SutParams): SutTypes => {
   const validationStub = new ValidationStub()
   const authenticationSpy = new AuthenticationSpy()
+  const forgetPasswordSpy = new ForgetPasswordSpy()
   const sut = render(
-    <Login validation={validationStub} authentication={authenticationSpy} />
+    <Login
+      validation={validationStub}
+      authentication={authenticationSpy}
+      forgetPassword={forgetPasswordSpy}
+    />
   )
   validationStub.errorMessage = params.validationError
   return { sut, validationStub, authenticationSpy }

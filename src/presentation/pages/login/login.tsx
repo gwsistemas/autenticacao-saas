@@ -11,23 +11,29 @@ import {
   Iframe,
   Row,
   Divider,
-  FormStatus,
-  Modal
+  FormStatus
 } from '@/presentation/components'
 
-import { Title, Card, ContentButton, Icones, LinkButton } from './styles'
+import { Icones, LinkButton } from './styles'
 import { Validation } from '@/presentation/protocols/validation'
-import { Authentication } from '@/domain/usecases'
+import { Authentication, ForgetPassword } from '@/domain/usecases'
 import { currentAccountState } from '@/presentation/state-management/atoms'
+import ForgetPasswordModal from './components/forget-password-modal'
+import RegisterAccountModal from './components/register-account-modal'
 
 type Props = {
   validation: Validation
   authentication: Authentication
+  forgetPassword: ForgetPassword
 }
 
-const Login: React.FC<Props> = ({ validation, authentication }: Props) => {
-  const [showRegisterModal, setRegisterModal] = useState(false)
-  const [showRecoveryModal, setRecoveryModal] = useState(false)
+const Login: React.FC<Props> = ({
+  validation,
+  authentication,
+  forgetPassword
+}: Props) => {
+  const [openRegisterAccount, setOpenRegisterAccount] = useState(false)
+  const [openForgetPassword, setOpenForgetPassword] = useState(false)
   const [state, setState] = useState({
     isLoading: false,
     email: '',
@@ -38,9 +44,11 @@ const Login: React.FC<Props> = ({ validation, authentication }: Props) => {
   })
   const { setCurrentAccount } = useRecoilValue(currentAccountState)
 
-  const handleRecoveryModal = (): void => setRecoveryModal(!showRecoveryModal)
+  const handleOpenForgetPasswordToggle = (): void =>
+    setOpenForgetPassword(!openForgetPassword)
 
-  const handleRegisterModal = (): void => setRegisterModal(!showRegisterModal)
+  const handleRegisterAccountToggle = (): void =>
+    setOpenRegisterAccount(!openRegisterAccount)
 
   const history = useHistory()
 
@@ -89,7 +97,7 @@ const Login: React.FC<Props> = ({ validation, authentication }: Props) => {
 
   return (
     <Page>
-      <Column hideMobile data-testid="column-login">
+      <Column hideMobile>
         <Iframe
           height="525px"
           data="https://gw-sas.s3.us-east-2.amazonaws.com/projeto-saas/templates/tela-login/anuncio-lado-esquerdo/infos-login.html"
@@ -134,7 +142,7 @@ const Login: React.FC<Props> = ({ validation, authentication }: Props) => {
               }
               data-testid="submit"
             >
-              {!state.isLoading ? 'Login' : 'Aguarde'}
+              {!state.isLoading ? 'Login' : 'Aguarde...'}
             </Button>
           </Row>
         </Form>
@@ -143,48 +151,29 @@ const Login: React.FC<Props> = ({ validation, authentication }: Props) => {
             <LinkButton
               variant="text"
               color="primary"
-              onClick={handleRecoveryModal}
+              onClick={handleOpenForgetPasswordToggle}
             >
               Esqueceu a senha?
             </LinkButton>
           </Column>
           <Column>
-            <LinkButton variant="text" onClick={handleRegisterModal}>
+            <LinkButton variant="text" onClick={handleRegisterAccountToggle}>
               Ainda não possui cadastro?
             </LinkButton>
           </Column>
         </Row>
         <Icones src="/images/icones-login-trans.png" />
       </Column>
-      <Modal
-        width="30rem"
-        height="auto"
-        isOpen={showRecoveryModal}
-        onClose={handleRecoveryModal}
-      >
-        <Title>Esqueceu a senha?</Title>
-        <Card>
-          <Input
-            fullWidth
-            helpText=""
-            label="Informe seu email:"
-            placeholder="Digite seu email"
-          />
-          <br />
-          <ContentButton>
-            <Button data-testid="submit">Recuperar conta</Button>
-          </ContentButton>
-        </Card>
-      </Modal>
-      <Modal
-        size="xl"
-        width="90%"
-        height="95%"
-        isOpen={showRegisterModal}
-        onClose={handleRegisterModal}
-      >
-        <Iframe data="https://gw-sas.s3.us-east-2.amazonaws.com/portal/recurso/HOM/index.html?stage=HOM" />
-      </Modal>
+      <ForgetPasswordModal
+        validation={validation}
+        forgetPassword={forgetPassword}
+        open={openForgetPassword}
+        onClose={handleOpenForgetPasswordToggle}
+      />
+      <RegisterAccountModal
+        open={openRegisterAccount}
+        onClose={handleRegisterAccountToggle}
+      />
     </Page>
   )
 }
