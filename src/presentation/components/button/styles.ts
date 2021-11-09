@@ -5,13 +5,17 @@ import { ButtonProps } from './types'
 export const ButtonBase = styled.button<ButtonProps>`
   cursor: pointer;
   min-height: 38px;
-  font-size: 2.1rem;
-  padding: 0.6rem 2.3rem;
+  font-size: ${({ size }): string =>
+    (size === 'default' && '2.1rem') || (size === 'small' && '1.6rem')};
+  padding: ${({ size }): string =>
+    (size === 'default' && '0.6rem 2.3rem') ||
+    (size === 'small' && '0.6rem 1.4rem')};
   border-radius: ${({ isRounded }) => (isRounded ? '2.3rem' : '0.4rem')};
 
   color: ${({ theme, variant, color }) =>
     (color === 'primary' && theme.colors.primary.contrastText) ||
     (color === 'secondary' && theme.colors.secondary.contrastText) ||
+    (color === 'default' && theme.colors.default.contrastText) ||
     (variant === 'text' && theme.colors.primary.light)};
 
   background-color: ${({ theme, variant, color }) =>

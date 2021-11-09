@@ -8,6 +8,10 @@ declare module 'styled-components' {
         black: string
         white: string
       }
+      default: {
+        main: string
+        contrastText: string
+      }
       primary: {
         light: string
         main: string

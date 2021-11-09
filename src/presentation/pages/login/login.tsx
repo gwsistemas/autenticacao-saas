@@ -11,7 +11,8 @@ import {
   Iframe,
   Row,
   Divider,
-  FormStatus
+  FormStatus,
+  MessageModal
 } from '@/presentation/components'
 
 import { Icones, LinkButton } from './styles'
@@ -34,6 +35,10 @@ const Login: React.FC<Props> = ({
 }: Props) => {
   const [openRegisterAccount, setOpenRegisterAccount] = useState(false)
   const [openForgetPassword, setOpenForgetPassword] = useState(false)
+  const [messageModal, setMessageModal] = useState({
+    open: false,
+    message: ''
+  })
   const [state, setState] = useState({
     isLoading: false,
     email: '',
@@ -68,6 +73,18 @@ const Login: React.FC<Props> = ({
     handleValidation()
   }
 
+  const handleOpennMessageModalToggle = (message: string = ''): void => {
+    setMessageModal((prevState) => ({
+      open: !prevState.open,
+      message
+    }))
+  }
+
+  const handleForgetPasswordSuccess = (message: string): void => {
+    handleOpenForgetPasswordToggle()
+    handleOpennMessageModalToggle(message)
+  }
+
   const handleSubmit = async (
     event: React.FormEvent<HTMLFormElement>
   ): Promise<void> => {
@@ -89,7 +106,11 @@ const Login: React.FC<Props> = ({
       })
       setCurrentAccount(account)
       setState({ ...state, isLoading: false, mainError: '' })
-      history.push('/home')
+      if (account.ativo) {
+        history.push('/home')
+      } else {
+        alert(JSON.stringify(account))
+      }
     } catch (error) {
       setState({ ...state, isLoading: false, mainError: error.message })
     }
@@ -164,16 +185,27 @@ const Login: React.FC<Props> = ({
         </Row>
         <Icones src="/images/icones-login-trans.png" />
       </Column>
-      <ForgetPasswordModal
-        validation={validation}
-        forgetPassword={forgetPassword}
-        open={openForgetPassword}
-        onClose={handleOpenForgetPasswordToggle}
-      />
+      {openForgetPassword && (
+        <ForgetPasswordModal
+          validation={validation}
+          forgetPassword={forgetPassword}
+          open={openForgetPassword}
+          onClose={handleOpenForgetPasswordToggle}
+          onSuccess={handleForgetPasswordSuccess}
+        />
+      )}
       <RegisterAccountModal
         open={openRegisterAccount}
         onClose={handleRegisterAccountToggle}
       />
+      <MessageModal
+        open={messageModal.open}
+        onClose={handleOpennMessageModalToggle}
+        width="100%"
+        maxWidth="50rem"
+      >
+        <p>{messageModal.message}</p>
+      </MessageModal>
     </Page>
   )
 }

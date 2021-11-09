@@ -8,11 +8,13 @@ const Button: React.FC<ButtonProps> = ({
   isRounded = true,
   color = 'primary',
   variant = 'contained',
+  size = 'default',
   ...rest
 }: ButtonProps) => (
   <ButtonBase
     data-testid="button"
     {...rest}
+    size={size}
     color={color}
     variant={variant}
     isRounded={isRounded}

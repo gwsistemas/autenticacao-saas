@@ -8,6 +8,10 @@ export const defaultTheme: DefaultTheme = {
       black: '#000',
       white: '#fff'
     },
+    default: {
+      main: grey['400'],
+      contrastText: grey['400']
+    },
     primary: {
       light: '#3273dc',
       main: '#00287c',

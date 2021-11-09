@@ -21,7 +21,7 @@ html, body, #main {
 }
 
 body {
-  font-size: 2rem;
+  font-size: 1rem;
   font-weight: 400;
   font-family: 'Open Sans', sans-serif;
 }
@@ -86,5 +86,7 @@ img {
   display: block;
   height: auto;
 }
-
+p {
+  font-size: 1.4rem
+}
 `

@@ -6,7 +6,6 @@ import {
   Image,
   ModalHeader,
   ModalWrapper,
-  ModalContent,
   ModalContainer
 } from './styles'
 
@@ -27,7 +26,7 @@ const Modal: React.FC<ModalProps> = ({
         <ModalHeader size={size}>
           <Image src="/images/logo-gw-login-menor.png" alt="GW Image" />
         </ModalHeader>
-        <ModalContent>{children}</ModalContent>
+        {children}
       </ModalContainer>
     </ModalWrapper>
   )
