@@ -1,18 +1,15 @@
-import { HttpPostClient, HttpStatusCode } from '@/data/protocols/http'
+import { HttpClient, HttpStatusCode } from '@/data/protocols/http'
 import { ForgetPasswordError, UnexpectedError } from '@/domain/errors'
 import { ForgetPassword } from '@/domain/usecases'
 
 export class RemoteForgetPasword implements ForgetPassword {
   constructor(
     private readonly url: string,
-    private readonly httpPostClient: HttpPostClient<
-      ForgetPassword.Params,
-      ForgetPassword.Model
-    >
+    private readonly httpClient: HttpClient<ForgetPassword.Model>
   ) {}
 
   async send(params: ForgetPassword.Params): Promise<ForgetPassword.Model> {
-    const httpResponse = await this.httpPostClient.post({
+    const httpResponse = await this.httpClient.request({
       url: this.url,
       body: params
     })
