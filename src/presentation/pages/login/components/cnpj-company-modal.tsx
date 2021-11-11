@@ -18,7 +18,7 @@ type Props = {
   onSuccess: (message: string) => void
 }
 
-const ForgetPasswordModal: React.FC<Props> = ({
+const CNPJCompanyModal: React.FC<Props> = ({
   open,
   onClose,
   validation,
@@ -26,8 +26,8 @@ const ForgetPasswordModal: React.FC<Props> = ({
   onSuccess
 }: Props) => {
   const [state, setState] = useState({
-    email: '',
-    emailError: '',
+    cnpj: '',
+    cnpjError: '',
     mainError: '',
     isLoading: false
   })
@@ -35,7 +35,7 @@ const ForgetPasswordModal: React.FC<Props> = ({
   const handleValidation = (): void => {
     setState((prevState) => ({
       ...prevState,
-      emailError: validation.validate('email', prevState.email)
+      cnpjError: validation.validate('cnpj', prevState.cnpj)
     }))
   }
 
@@ -43,7 +43,7 @@ const ForgetPasswordModal: React.FC<Props> = ({
     const { target } = event
     setState((prevState) => ({
       ...prevState,
-      email: target.value
+      cnpj: target.value
     }))
     handleValidation()
   }
@@ -53,13 +53,13 @@ const ForgetPasswordModal: React.FC<Props> = ({
   ): Promise<void> => {
     event.preventDefault()
     setState((prevState) => ({ ...prevState, isLoading: true }))
-    if (!state.email) {
+    if (!state.cnpj) {
       handleValidation()
       return
     }
     try {
       const data = await forgetPassword.send({
-        email: state.email
+        email: state.cnpj
       })
       setState((prevState) => ({
         ...prevState,
@@ -81,8 +81,8 @@ const ForgetPasswordModal: React.FC<Props> = ({
   useEffect(() => {
     return (): void => {
       setState({
-        email: '',
-        emailError: '',
+        cnpj: '',
+        cnpjError: '',
         mainError: '',
         isLoading: false
       })
@@ -98,26 +98,26 @@ const ForgetPasswordModal: React.FC<Props> = ({
       onClose={onClose}
     >
       <ModalContent>
-        <Title>Esqueceu a senha?</Title>
+        <Title>Informe o CNPJ da empresa</Title>
         <form onSubmit={handleSubmit}>
           <Card>
             <Input
               fullWidth
-              label="Informe seu email:"
-              placeholder="Digite seu email"
+              label="CNPJ:"
+              placeholder="Digite o CNPJ"
               onChange={handleChange}
-              value={state.email}
-              helpText={state.emailError}
-              error={!!state.emailError}
+              value={state.cnpj}
+              helpText={state.cnpjError}
+              error={!!state.cnpjError}
             />
             {!!state.mainError && <FormStatus>{state.mainError}</FormStatus>}
             <br />
             <ContentButton>
               <Button
                 data-testid="submit"
-                disabled={!!state.emailError || state.isLoading}
+                disabled={!!state.cnpjError || state.isLoading}
               >
-                {!state.isLoading ? 'Recuperar conta' : 'Aguarde...'}
+                {!state.isLoading ? 'Buscar usuário' : 'Aguarde...'}
               </Button>
             </ContentButton>
           </Card>
@@ -127,4 +127,4 @@ const ForgetPasswordModal: React.FC<Props> = ({
   )
 }
 
-export default memo(ForgetPasswordModal)
+export default memo(CNPJCompanyModal)

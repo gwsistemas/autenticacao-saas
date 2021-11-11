@@ -12,6 +12,7 @@ import {
 const Modal: React.FC<ModalProps> = ({
   width,
   height,
+  maxWidth,
   onClose,
   children,
   size = 'sm',
@@ -22,7 +23,7 @@ const Modal: React.FC<ModalProps> = ({
   return (
     <ModalWrapper>
       <Overlay onClick={onClose} />
-      <ModalContainer width={width} height={height}>
+      <ModalContainer width={width} height={height} maxWidth={maxWidth}>
         <ModalHeader size={size}>
           <Image src="/images/logo-gw-login-menor.png" alt="GW Image" />
         </ModalHeader>
