@@ -1,21 +1,25 @@
 import {
-  HttpPostClient,
-  HttpPostParams,
+  HttpClient,
+  HttpRequest,
   HttpResponse,
   HttpStatusCode
 } from '../protocols/http'
 
 // This class is a mock to HttpAxiosClient, HttpFetchClient...
-export class HttpClientPostSpy<P, R> implements HttpPostClient<P, R> {
+export class HttpClientSpy<R = any> implements HttpClient<R> {
   url: string
-  body?: P
+  body?: any
+  headers?: any
+  methods?: string
   response: HttpResponse<R> = {
     statusCode: HttpStatusCode.ok
   }
 
-  async post(params: HttpPostParams<P>): Promise<HttpResponse<R>> {
-    this.url = params.url
-    this.body = params.body
-    return await Promise.resolve(this.response)
+  async request(data: HttpRequest): Promise<HttpResponse<R>> {
+    this.url = data.url
+    this.body = data.body
+    this.headers = data.headers
+    this.methods = data.method
+    return this.response
   }
 }

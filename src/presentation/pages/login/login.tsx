@@ -21,6 +21,7 @@ import { Authentication, ForgetPassword } from '@/domain/usecases'
 import { currentAccountState } from '@/presentation/state-management/atoms'
 import ForgetPasswordModal from './components/forget-password-modal'
 import RegisterAccountModal from './components/register-account-modal'
+import CNPJCompanyModal from './components/cnpj-company-modal'
 
 type Props = {
   validation: Validation
@@ -35,6 +36,7 @@ const Login: React.FC<Props> = ({
 }: Props) => {
   const [openRegisterAccount, setOpenRegisterAccount] = useState(false)
   const [openForgetPassword, setOpenForgetPassword] = useState(false)
+  const [openCNPJ, setOpenCNPJ] = useState(false)
   const [messageModal, setMessageModal] = useState({
     open: false,
     message: ''
@@ -54,6 +56,8 @@ const Login: React.FC<Props> = ({
 
   const handleRegisterAccountToggle = (): void =>
     setOpenRegisterAccount(!openRegisterAccount)
+
+  const handleOpenCNPJToogle = (): void => setOpenCNPJ(!openCNPJ)
 
   const history = useHistory()
 
@@ -112,7 +116,10 @@ const Login: React.FC<Props> = ({
         alert(JSON.stringify(account))
       }
     } catch (error) {
-      setState({ ...state, isLoading: false, mainError: error.message })
+      if (error.name === 'InvalideCredentialsError') {
+        handleOpenCNPJToogle()
+      }
+      setState({ ...state, isLoading: false })
     }
   }
 
@@ -191,6 +198,15 @@ const Login: React.FC<Props> = ({
           forgetPassword={forgetPassword}
           open={openForgetPassword}
           onClose={handleOpenForgetPasswordToggle}
+          onSuccess={handleForgetPasswordSuccess}
+        />
+      )}
+      {openCNPJ && (
+        <CNPJCompanyModal
+          validation={validation}
+          forgetPassword={forgetPassword}
+          open={openCNPJ}
+          onClose={handleOpenCNPJToogle}
           onSuccess={handleForgetPasswordSuccess}
         />
       )}
