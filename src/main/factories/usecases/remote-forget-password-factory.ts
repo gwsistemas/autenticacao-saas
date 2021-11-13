@@ -1,6 +1,6 @@
 import { RemoteForgetPasword } from '@/data/usecases'
-import { makeApiUrl } from '../factories/http/api-url-factory'
-import { makeAxiosHttpClient } from '../factories/http/axios-http-client-factory'
+import { makeApiUrl } from '../http/api-url-factory'
+import { makeAxiosHttpClient } from '../http/axios-http-client-factory'
 import { ForgetPassword } from '@/domain/usecases'
 
 export const makeForgetPassword = (): ForgetPassword => {

@@ -1,8 +1,11 @@
 import React from 'react'
 import { Login } from '@/presentation/pages'
-import { makeRemoteAuthentication } from '@/main/usecases/remote-authentication-factory'
 import { makeLoginValidation } from '@/main/factories/pages/login/login-validation-factory'
-import { makeForgetPassword } from '@/main/usecases/remote-forget-password-factory'
+import {
+  makeRemoteAuthentication,
+  makeForgetPassword,
+  makeSearchUserOrganization
+} from '@/main/factories/usecases'
 
 export const makeLogin: React.FC = () => {
   return (
@@ -10,6 +13,7 @@ export const makeLogin: React.FC = () => {
       forgetPassword={makeForgetPassword()}
       validation={makeLoginValidation()}
       authentication={makeRemoteAuthentication()}
+      searchUserOrganization={makeSearchUserOrganization()}
     />
   )
 }
