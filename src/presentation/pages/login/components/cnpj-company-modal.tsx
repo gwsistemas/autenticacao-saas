@@ -8,22 +8,27 @@ import {
 } from '@/presentation/components'
 import { Card, ContentButton, Title } from '../styles'
 import { Validation } from '@/presentation/protocols/validation'
-import { ForgetPassword } from '@/domain/usecases'
+import { SearchUserOrganization } from '@/domain/usecases'
 
 type Props = {
   open: boolean
   onClose: () => void
   validation: Validation
-  forgetPassword: ForgetPassword
+  searchUserOrganization: SearchUserOrganization
   onSuccess: (message: string) => void
+  user: {
+    login_usuario: string
+    senha_usuario: string
+  }
 }
 
 const CNPJCompanyModal: React.FC<Props> = ({
   open,
   onClose,
   validation,
-  forgetPassword,
-  onSuccess
+  searchUserOrganization,
+  onSuccess,
+  user
 }: Props) => {
   const [state, setState] = useState({
     cnpj: '',
@@ -58,8 +63,10 @@ const CNPJCompanyModal: React.FC<Props> = ({
       return
     }
     try {
-      const data = await forgetPassword.send({
-        email: state.cnpj
+      const data = await searchUserOrganization.search({
+        cnpj_organizacao: state.cnpj,
+        login_usuario: user.login_usuario,
+        senha_usuario: user.senha_usuario
       })
       setState((prevState) => ({
         ...prevState,

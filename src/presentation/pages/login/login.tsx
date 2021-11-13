@@ -17,7 +17,11 @@ import {
 
 import { Icones, LinkButton } from './styles'
 import { Validation } from '@/presentation/protocols/validation'
-import { Authentication, ForgetPassword } from '@/domain/usecases'
+import {
+  Authentication,
+  ForgetPassword,
+  SearchUserOrganization
+} from '@/domain/usecases'
 import { currentAccountState } from '@/presentation/state-management/atoms'
 import ForgetPasswordModal from './components/forget-password-modal'
 import RegisterAccountModal from './components/register-account-modal'
@@ -27,12 +31,14 @@ type Props = {
   validation: Validation
   authentication: Authentication
   forgetPassword: ForgetPassword
+  searchUserOrganization: SearchUserOrganization
 }
 
 const Login: React.FC<Props> = ({
   validation,
   authentication,
-  forgetPassword
+  forgetPassword,
+  searchUserOrganization
 }: Props) => {
   const [openRegisterAccount, setOpenRegisterAccount] = useState(false)
   const [openForgetPassword, setOpenForgetPassword] = useState(false)
@@ -86,6 +92,11 @@ const Login: React.FC<Props> = ({
 
   const handleForgetPasswordSuccess = (message: string): void => {
     handleOpenForgetPasswordToggle()
+    handleOpennMessageModalToggle(message)
+  }
+
+  const handleCNPJReturnMessage = (message: string): void => {
+    handleOpenCNPJToogle()
     handleOpennMessageModalToggle(message)
   }
 
@@ -204,10 +215,14 @@ const Login: React.FC<Props> = ({
       {openCNPJ && (
         <CNPJCompanyModal
           validation={validation}
-          forgetPassword={forgetPassword}
+          searchUserOrganization={searchUserOrganization}
           open={openCNPJ}
           onClose={handleOpenCNPJToogle}
-          onSuccess={handleForgetPasswordSuccess}
+          onSuccess={handleCNPJReturnMessage}
+          user={{
+            login_usuario: state.email,
+            senha_usuario: state.password
+          }}
         />
       )}
       <RegisterAccountModal
