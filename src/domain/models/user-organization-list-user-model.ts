@@ -13,7 +13,7 @@ export type UserOrganizationUserModel = {
   organizacao_ativa: boolean
   organizacao_img_logo: string
   dt_vencimento_organizacao: string
-  tipo_acesso: Array<'u' | 'r' | 'c'>
+  tipo_acesso: string[]
 }
 
 export type UserOrganizationListUserModel = UserOrganizationUserModel[]
