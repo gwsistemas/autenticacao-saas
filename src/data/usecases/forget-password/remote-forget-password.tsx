@@ -11,7 +11,8 @@ export class RemoteForgetPasword implements ForgetPassword {
   async send(params: ForgetPassword.Params): Promise<ForgetPassword.Model> {
     const httpResponse = await this.httpClient.request({
       url: this.url,
-      body: params
+      body: params,
+      method: 'post'
     })
     switch (httpResponse.statusCode) {
       case HttpStatusCode.ok:

@@ -1,3 +1,3 @@
 export * from './account-model'
-export * from './user-organization-list'
-export * from './common-return'
+export * from './user-organization-list-user-model'
+export * from './common-return-model'

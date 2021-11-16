@@ -1,4 +1,4 @@
-export type UserOrganization = {
+export type UserOrganizationUserModel = {
   id_organizacao: number
   nome_organizacao: string
   chave_organizacao: string
@@ -13,7 +13,7 @@ export type UserOrganization = {
   organizacao_ativa: boolean
   organizacao_img_logo: string
   dt_vencimento_organizacao: string
-  tipo_acesso: string[]
+  tipo_acesso: Array<'u' | 'r' | 'c'>
 }
 
-export type UserOrganizationList = UserOrganization[]
+export type UserOrganizationListUserModel = UserOrganizationUserModel[]
