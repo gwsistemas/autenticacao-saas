@@ -1,7 +1,12 @@
+type Params = {
+  [field: string]: any
+}
+
 export type HttpRequest = {
   url: string
   method?: HttpMethod
   body?: any
+  params?: Params
   headers?: any
 }
 
