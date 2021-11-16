@@ -44,4 +44,6 @@ export const TypographyBase = styled.div<Props>`
   ${({ variant }): any => variantMapping[variant] || typographyDefault};
   color: ${({ color, theme }): any =>
     typographyDefaultColors[color] || theme.colors.common.black};
+  text-transform: ${({ upperCase }): string =>
+    (upperCase && 'uppercase') || 'none'};
 `

@@ -124,7 +124,9 @@ const Login: React.FC<Props> = ({
       if (account.ativo) {
         history.push('/home')
       } else {
-        alert(JSON.stringify(account))
+        handleOpennMessageModalToggle(
+          `Informar ao usuário que a conta esta pendente de ativação e que um novo e-mail foi enviado para que seja ativada.`
+        )
       }
     } catch (error) {
       if (error.name === 'InvalideCredentialsError') {
@@ -229,14 +231,16 @@ const Login: React.FC<Props> = ({
         open={openRegisterAccount}
         onClose={handleRegisterAccountToggle}
       />
-      <MessageModal
-        open={messageModal.open}
-        onClose={handleOpennMessageModalToggle}
-        width="100%"
-        maxWidth="50rem"
-      >
-        <p>{messageModal.message}</p>
-      </MessageModal>
+      {messageModal.open && (
+        <MessageModal
+          open={messageModal.open}
+          onClose={handleOpennMessageModalToggle}
+          width="100%"
+          maxWidth="50rem"
+        >
+          <p>{messageModal.message}</p>
+        </MessageModal>
+      )}
     </Page>
   )
 }

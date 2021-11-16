@@ -6,4 +6,5 @@ export interface Props {
   component?: string | undefined
   color?: Color
   as?: any
+  upperCase?: boolean
 }

@@ -61,10 +61,12 @@ export const Form = styled.form`
 `
 
 export const Image = styled.img`
-  width: 260px;
+  width: 75px;
+  height: 30px;
   margin: 0px auto;
   margin-top: 1rem;
   margin-bottom: 1.6rem;
+  object-fit: contain;
 `
 
 export const Divider = styled.div`
