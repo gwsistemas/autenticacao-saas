@@ -50,11 +50,4 @@ export const PaginationButton = styled.li<LiProps>`
       color: ${theme.colors.secondary.contrastText};
       background-color: ${theme.colors.secondary.main};
     `}
-
-&:nth-child(2) {
-    border: none;
-    cursor: default;
-    font-size: 2.3rem;
-    color: ${({ theme }) => theme.colors.grey[300]};
-  }
 `
