@@ -8,6 +8,7 @@ export type HttpRequest = {
   body?: any
   params?: Params
   headers?: any
+  withCredentials?: boolean
 }
 
 export interface HttpClient<R = any> {
