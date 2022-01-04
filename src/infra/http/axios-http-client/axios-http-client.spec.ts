@@ -30,7 +30,8 @@ describe('AxiosHttpClient', () => {
       url: request.url,
       data: request.body,
       headers: request.headers,
-      method: request.method
+      method: request.method,
+      withCredentials: false
     })
   })
   it('should return the correct statusCode and body', async () => {
