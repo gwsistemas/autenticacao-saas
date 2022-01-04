@@ -10,15 +10,14 @@ import {
   Page,
   Row,
   Divider,
-  Typography,
-  Pagination
+  Pagination,
+  MessageModal
 } from '@/presentation/components'
 import { currentAccountState } from '@/presentation/state-management/atoms'
 
 import {
   Figcaption,
   Figure,
-  OrgItem,
   OrgList,
   Search,
   SearchIcon,
@@ -26,113 +25,23 @@ import {
 } from './styles'
 import { Props } from './types'
 import { UserOrganizationUserModel } from '@/domain/models'
+import { UserOrganizationList } from './components'
 
-const data = [
-  {
-    id_organizacao: 1,
-    nome_organizacao: 'GWSolucoes',
-    chave_organizacao: '123123',
-    ambiente_organizacao: {
-      id_ambiente: 0,
-      nome_ambiente: 'opactc',
-      versao_ambiente: 'opactc',
-      url_app_ambiente: 'opactc',
-      url_app_gweb_ambiente: 'opactc'
-    },
-    responsavel_organizacao: 0,
-    organizacao_ativa: true,
-    organizacao_img_logo:
-      'https://gw-sas.s3.us-east-2.amazonaws.com/organizacoes/GWSISTEMASDEV/IMG/LOGO/logo.jpg',
-    dt_vencimento_organizacao: '2022-12-15T00:00:00Z',
-    tipo_acesso: ['u']
-  },
-  {
-    id_organizacao: 2,
-    nome_organizacao: 'GWSolucoes',
-    chave_organizacao: '123123',
-    ambiente_organizacao: {
-      id_ambiente: 0,
-      nome_ambiente: 'opactc',
-      versao_ambiente: 'opactc',
-      url_app_ambiente: 'opactc',
-      url_app_gweb_ambiente: 'opactc'
-    },
-    responsavel_organizacao: 0,
-    organizacao_ativa: true,
-    organizacao_img_logo:
-      'https://gw-sas.s3.us-east-2.amazonaws.com/organizacoes/GWSISTEMASDEV/IMG/LOGO/logo.jpg',
-    dt_vencimento_organizacao: '2022-12-15T00:00:00Z',
-    tipo_acesso: ['r']
-  },
-  {
-    id_organizacao: 3,
-    nome_organizacao: 'Nova Organização',
-    chave_organizacao: '123123',
-    ambiente_organizacao: {
-      id_ambiente: 0,
-      nome_ambiente: 'opactc',
-      versao_ambiente: 'opactc',
-      url_app_ambiente: 'opactc',
-      url_app_gweb_ambiente: 'opactc'
-    },
-    responsavel_organizacao: 0,
-    organizacao_ativa: true,
-    organizacao_img_logo:
-      'https://gw-sas.s3.us-east-2.amazonaws.com/organizacoes/GWSISTEMASDEV/IMG/LOGO/logo.jpg',
-    dt_vencimento_organizacao: '2022-12-15T00:00:00Z',
-    tipo_acesso: ['c']
-  },
-  {
-    id_organizacao: 4,
-    nome_organizacao: 'ABC Solucoes',
-    chave_organizacao: '123123',
-    ambiente_organizacao: {
-      id_ambiente: 0,
-      nome_ambiente: 'opactc',
-      versao_ambiente: 'opactc',
-      url_app_ambiente: 'opactc',
-      url_app_gweb_ambiente: 'opactc'
-    },
-    responsavel_organizacao: 0,
-    organizacao_ativa: true,
-    organizacao_img_logo:
-      'https://gw-sas.s3.us-east-2.amazonaws.com/organizacoes/GWSISTEMASDEV/IMG/LOGO/logo.jpg',
-    dt_vencimento_organizacao: '2022-12-15T00:00:00Z',
-    tipo_acesso: ['u']
-  },
-  {
-    id_organizacao: 5,
-    nome_organizacao: 'GWSolucoes',
-    chave_organizacao: '123123',
-    ambiente_organizacao: {
-      id_ambiente: 0,
-      nome_ambiente: 'opactc',
-      versao_ambiente: 'opactc',
-      url_app_ambiente: 'opactc',
-      url_app_gweb_ambiente: 'opactc'
-    },
-    responsavel_organizacao: 0,
-    organizacao_ativa: true,
-    organizacao_img_logo:
-      'https://gw-sas.s3.us-east-2.amazonaws.com/organizacoes/GWSISTEMASDEV/IMG/LOGO/logo.jpg',
-    dt_vencimento_organizacao: '2022-12-15T00:00:00Z',
-    tipo_acesso: ['r']
-  }
-]
-
-type IconTypes = {
-  [x: string]: any
-}
-
-const iconTypes: IconTypes = {
-  u: 'fa-user-tie',
-  c: 'fa-user-circle',
-  r: 'fa-handshake'
-}
-
-const Home: React.FC<Props> = ({ userListOrganizationUser }: Props) => {
-  const [organizationData, setOrganizationData] = useState(data)
+const Home: React.FC<Props> = ({
+  userListOrganizationUser,
+  loginSystem
+}: Props) => {
+  const [organizationData, setOrganizationData] = useState([])
+  const [organizationType, setOrganizationType] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
+  const [filters, setFilters] = useState({
+    type: 'u',
+    nomeOrganizacao: ''
+  })
+  const [messageModal, setMessageModal] = useState({
+    open: false,
+    message: ''
+  })
   const { getCurrentAccount } = useRecoilValue(currentAccountState)
 
   const organizationPerPage = 4
@@ -148,30 +57,64 @@ const Home: React.FC<Props> = ({ userListOrganizationUser }: Props) => {
   }
 
   const handlePrevPage = (): void => {
-    if (currentPage > 1 && currentPage <= data.length) {
+    if (currentPage > 1 && currentPage <= organizationData.length) {
       setCurrentPage(currentPage - 1)
     }
   }
   const handleNextPage = (): void => {
-    if (currentPage < data.length) {
+    if (currentPage < organizationData.length) {
       setCurrentPage(currentPage + 1)
     }
   }
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    const value = event.target.value
-    const organizationFiltered = data.filter((organization) => {
-      return organization.nome_organizacao
-        .toLowerCase()
-        .trim()
-        .includes(value.toLowerCase().trim())
-    })
+    const nomeOrganizacao = event.target.value
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      nomeOrganizacao
+    }))
+    // const organizationFiltered = data.filter((organization) => {
+    //   return organization.nome_organizacao
+    //     .toLowerCase()
+    //     .trim()
+    //     .includes(value.toLowerCase().trim())
+    // })
 
-    setOrganizationData(organizationFiltered)
+    // setOrganizationData(organizationFiltered)
+  }
+  const handleOpennMessageModalToggle = (message: string = ''): void => {
+    setMessageModal((prevState) => ({
+      open: !prevState.open,
+      message
+    }))
   }
 
   const handlePressOrganization = (item: UserOrganizationUserModel): void => {
-    console.log(item)
+    const typeAcessoOrganization = item.tipo_acesso[0]
+    if (typeAcessoOrganization === 'c') {
+      void handleSendOrganization(item, typeAcessoOrganization)
+    }
+  }
+
+  const handleSendOrganization = async (
+    item: UserOrganizationUserModel,
+    tipoAcesso: string
+  ): Promise<void> => {
+    try {
+      const resp = await loginSystem.auth({
+        linkSistema: item.ambiente_organizacao.url_app_ambiente,
+        clienteFornecedorId: -1,
+        isGweb: false,
+        login: getCurrentAccount().email,
+        senha: getCurrentAccount().senha,
+        tipoAcesso,
+        organizacaoEscolhidaId: item.id_organizacao
+      })
+      console.log('resp = ', resp)
+      console.log(item)
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   useEffect(() => {
@@ -180,7 +123,13 @@ const Home: React.FC<Props> = ({ userListOrganizationUser }: Props) => {
         id_usuario: getCurrentAccount()?.id
       })
       .then((data) => {
-        console.log(data)
+        if (!data?.length) {
+          handleOpennMessageModalToggle(
+            'Você não possui acessi aos ambientes das organizações'
+          )
+          return
+        }
+        setOrganizationData(data)
       })
       .catch((error) => {
         console.log(error.message)
@@ -188,79 +137,93 @@ const Home: React.FC<Props> = ({ userListOrganizationUser }: Props) => {
   }, [])
 
   return (
-    <Page>
-      <Column hideMobile data-testid="column-home">
-        <Iframe
-          height="525px"
-          data="https://gw-sas.s3.us-east-2.amazonaws.com/projeto-saas/templates/tela-login/anuncio-lado-esquerdo/infos-login.html"
-        />
-      </Column>
-      <Divider />
-      <Column data-testid="column-login">
-        <Image src="/images/logo-gw-login-menor.png" alt="GW Image" />
-        <Title>Selecione seu acesso</Title>
-        <Row>
-          <Button variant="text">
-            <Figure active>
-              <i className="fas fa-user-tie" />
-              <Figcaption>Cliente</Figcaption>
-            </Figure>
-          </Button>
-          <Button variant="text">
-            <Figure>
-              <i className="far fa-handshake" />
-              <Figcaption>Representante</Figcaption>
-            </Figure>
-          </Button>
-          <Button variant="text">
-            <Figure>
-              <i className="fas fa-user-circle" />
-              <Figcaption>Colaborador</Figcaption>
-            </Figure>
-          </Button>
-        </Row>
-        <Row>
-          <Search>
-            <SearchIcon>
-              <i className="fas fa-search" />
-            </SearchIcon>
-            <Input
-              fullWidth
-              placeholder="Pesquise outras Organizações"
-              onChange={handleSearch}
-            />
-          </Search>
-        </Row>
-        <Title>Selecione a organização desejada</Title>
-        <OrgList>
-          <Column>
-            <div style={{ minHeight: 210 }}>
-              {!!currentOrganization.length &&
-                currentOrganization.map((item) => (
-                  <OrgItem
-                    key={item.id_organizacao}
-                    onClick={(): void => handlePressOrganization(item)}
-                  >
-                    <Image src={item.organizacao_img_logo} />
-                    <Typography upperCase>{item.nome_organizacao}</Typography>
-                    <i className={`fas ${iconTypes[item.tipo_acesso[0]]}`} />
-                  </OrgItem>
-                ))}
-            </div>
-          </Column>
-          <Column>
-            <Pagination
-              currentPage={currentPage}
-              itemPerPage={organizationPerPage}
-              totalData={organizationData.length}
-              onPaginate={handlePaginate}
-              onPrevPaginate={handlePrevPage}
-              onNextPaginate={handleNextPage}
-            />
-          </Column>
-        </OrgList>
-      </Column>
-    </Page>
+    <>
+      <Page>
+        <Column hideMobile data-testid="column-home">
+          <Iframe
+            height="525px"
+            data="https://gw-sas.s3.us-east-2.amazonaws.com/projeto-saas/templates/tela-login/anuncio-lado-esquerdo/infos-login.html"
+          />
+        </Column>
+        <Divider />
+        <Column data-testid="column-login">
+          <Image src="/images/logo-gw-login-menor.png" alt="GW Image" />
+          <Title>Selecione seu acesso</Title>
+          <Row>
+            <Button
+              variant="text"
+              onClick={(): void => setOrganizationType('u')}
+            >
+              <Figure active={organizationType === 'u'}>
+                <i className="fas fa-user-tie" />
+                <Figcaption>Cliente</Figcaption>
+              </Figure>
+            </Button>
+            <Button
+              variant="text"
+              onClick={(): void => setOrganizationType('r')}
+            >
+              <Figure active={organizationType === 'r'}>
+                <i className="far fa-handshake" />
+                <Figcaption>Representante</Figcaption>
+              </Figure>
+            </Button>
+            <Button
+              variant="text"
+              onClick={(): void => setOrganizationType('c')}
+            >
+              <Figure active={organizationType === 'c'}>
+                <i className="fas fa-user-circle" />
+                <Figcaption>Colaborador</Figcaption>
+              </Figure>
+            </Button>
+          </Row>
+          <Row>
+            <Search>
+              <SearchIcon>
+                <i className="fas fa-search" />
+              </SearchIcon>
+              <Input
+                fullWidth
+                placeholder="Pesquise outras Organizações"
+                onChange={handleSearch}
+              />
+            </Search>
+          </Row>
+          <Title>Selecione a organização desejada</Title>
+          <OrgList>
+            <Column>
+              {
+                <UserOrganizationList
+                  organizationsData={currentOrganization}
+                  textSearch={filters.nomeOrganizacao}
+                  onClickOrganization={handlePressOrganization}
+                  organizationType={organizationType}
+                />
+              }
+            </Column>
+            <Column>
+              <Pagination
+                currentPage={currentPage}
+                itemPerPage={organizationPerPage}
+                totalData={organizationData.length}
+                onPaginate={handlePaginate}
+                onPrevPaginate={handlePrevPage}
+                onNextPaginate={handleNextPage}
+              />
+            </Column>
+          </OrgList>
+        </Column>
+      </Page>
+      <MessageModal
+        open={messageModal.open}
+        onClose={handleOpennMessageModalToggle}
+        width="100%"
+        maxWidth="50rem"
+      >
+        <p>{messageModal.message}</p>
+      </MessageModal>
+    </>
   )
 }
 
