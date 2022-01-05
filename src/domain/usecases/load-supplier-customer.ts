@@ -8,7 +8,7 @@ export interface LoadSupplierCustomers {
 
 export namespace LoadSupplierCustomers {
   export type Params = {
-    id: number
+    organizacao_id: number
   }
   export type Model = SupplierCustomersList
 }
