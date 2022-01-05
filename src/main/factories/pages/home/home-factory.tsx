@@ -2,7 +2,8 @@ import React from 'react'
 import { Home } from '@/presentation/pages'
 import {
   makeRemoteUserOrganizationListUserFactory,
-  makeRemoteLoginSystem
+  makeRemoteLoginSystem,
+  makeRemoteLoadSupplierCustomers
 } from '@/main/factories/usecases'
 
 export const makeHome: React.FC = () => {
@@ -10,6 +11,7 @@ export const makeHome: React.FC = () => {
     <Home
       userListOrganizationUser={makeRemoteUserOrganizationListUserFactory()}
       loginSystem={makeRemoteLoginSystem()}
+      loadSupplierCustomers={makeRemoteLoadSupplierCustomers()}
     />
   )
 }

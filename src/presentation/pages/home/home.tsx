@@ -29,7 +29,8 @@ import { UserOrganizationList } from './components'
 
 const Home: React.FC<Props> = ({
   userListOrganizationUser,
-  loginSystem
+  loginSystem,
+  loadSupplierCustomers
 }: Props) => {
   const [organizationData, setOrganizationData] = useState([])
   const [organizationType, setOrganizationType] = useState('')
@@ -93,6 +94,8 @@ const Home: React.FC<Props> = ({
     const typeAcessoOrganization = item.tipo_acesso[0]
     if (typeAcessoOrganization === 'c') {
       void handleSendOrganization(item, typeAcessoOrganization)
+    } else {
+      void handleLoadSupplierCustomers(item)
     }
   }
 
@@ -101,7 +104,7 @@ const Home: React.FC<Props> = ({
     tipoAcesso: string
   ): Promise<void> => {
     try {
-      const resp = await loginSystem.auth({
+      await loginSystem.auth({
         linkSistema: item.ambiente_organizacao.url_app_ambiente,
         clienteFornecedorId: -1,
         isGweb: false,
@@ -110,8 +113,20 @@ const Home: React.FC<Props> = ({
         tipoAcesso,
         organizacaoEscolhidaId: item.id_organizacao
       })
-      console.log('resp = ', resp)
-      console.log(item)
+      window.location.href = item.ambiente_organizacao.url_app_ambiente
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const handleLoadSupplierCustomers = async (
+    item: UserOrganizationUserModel
+  ): Promise<void> => {
+    try {
+      const resp = await loadSupplierCustomers.load({
+        organizacao_id: item.id_organizacao
+      })
+      console.log('LoadSupplierCustomers = ', resp)
     } catch (error) {
       console.log(error)
     }
