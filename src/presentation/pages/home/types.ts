@@ -1,9 +1,5 @@
 import { HtmlHTMLAttributes } from 'react'
-import {
-  UserListOrganizationUser,
-  LoginSystem,
-  LoadSupplierCustomers
-} from '@/domain/usecases'
+import { UserListOrganizationUser, LoginSystem } from '@/domain/usecases'
 
 export interface FigureProps extends HtmlHTMLAttributes<HTMLElement> {
   active?: boolean
@@ -12,5 +8,4 @@ export interface FigureProps extends HtmlHTMLAttributes<HTMLElement> {
 export type Props = {
   userListOrganizationUser: UserListOrganizationUser
   loginSystem: LoginSystem
-  loadSupplierCustomers: LoadSupplierCustomers
 }
