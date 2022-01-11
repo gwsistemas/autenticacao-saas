@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 import React, { useEffect, useState } from 'react'
 import { useRecoilValue } from 'recoil'
+import { useHistory } from 'react-router-dom'
 import {
   Button,
   Column,
@@ -13,7 +14,10 @@ import {
   Pagination,
   MessageModal
 } from '@/presentation/components'
-import { currentAccountState } from '@/presentation/state-management/atoms'
+import {
+  currentAccountState,
+  currentOrganizationState
+} from '@/presentation/state-management/atoms'
 
 import {
   Figcaption,
@@ -29,10 +33,10 @@ import { UserOrganizationList } from './components'
 
 const Home: React.FC<Props> = ({
   userListOrganizationUser,
-  loginSystem,
-  loadSupplierCustomers
+  loginSystem
 }: Props) => {
   const [organizationData, setOrganizationData] = useState([])
+  const [organizationLoading, setOrganizationDataLoading] = useState(false)
   const [organizationType, setOrganizationType] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
   const [filters, setFilters] = useState({
@@ -44,6 +48,9 @@ const Home: React.FC<Props> = ({
     message: ''
   })
   const { getCurrentAccount } = useRecoilValue(currentAccountState)
+  const { setCurrentOrganization } = useRecoilValue(currentOrganizationState)
+
+  const history = useHistory()
 
   const organizationPerPage = 4
   const indexOfLastOrganization = currentPage * organizationPerPage
@@ -83,7 +90,7 @@ const Home: React.FC<Props> = ({
 
     // setOrganizationData(organizationFiltered)
   }
-  const handleOpennMessageModalToggle = (message: string = ''): void => {
+  const handleOpenMessageModalToggle = (message: string = ''): void => {
     setMessageModal((prevState) => ({
       open: !prevState.open,
       message
@@ -95,7 +102,7 @@ const Home: React.FC<Props> = ({
     if (typeAcessoOrganization === 'c') {
       void handleSendOrganization(item, typeAcessoOrganization)
     } else {
-      void handleLoadSupplierCustomers(item)
+      handleLoadSupplierCustomers(item)
     }
   }
 
@@ -115,38 +122,37 @@ const Home: React.FC<Props> = ({
       })
       window.location.href = item.ambiente_organizacao.url_app_ambiente
     } catch (error) {
-      console.log(error)
+      handleOpenMessageModalToggle(
+        'Algo de errado aconteceu, tente novamente mais tarde.'
+      )
     }
   }
 
-  const handleLoadSupplierCustomers = async (
-    item: UserOrganizationUserModel
-  ): Promise<void> => {
-    try {
-      const resp = await loadSupplierCustomers.load({
-        organizacao_id: item.id_organizacao
-      })
-      console.log('LoadSupplierCustomers = ', resp)
-    } catch (error) {
-      console.log(error)
-    }
+  const handleLoadSupplierCustomers = (
+    organizationItem: UserOrganizationUserModel
+  ): void => {
+    setCurrentOrganization(organizationItem)
+    history.push(`fornecedores/${organizationItem.id_organizacao}`)
   }
 
   useEffect(() => {
+    setOrganizationDataLoading(true)
     userListOrganizationUser
       .search({
         id_usuario: getCurrentAccount()?.id
       })
       .then((data) => {
         if (!data?.length) {
-          handleOpennMessageModalToggle(
+          handleOpenMessageModalToggle(
             'Você não possui acessi aos ambientes das organizações'
           )
           return
         }
         setOrganizationData(data)
+        setOrganizationDataLoading(false)
       })
       .catch((error) => {
+        setOrganizationDataLoading(false)
         console.log(error.message)
       })
   }, [])
@@ -210,6 +216,7 @@ const Home: React.FC<Props> = ({
             <Column>
               {
                 <UserOrganizationList
+                  loading={organizationLoading}
                   organizationsData={currentOrganization}
                   textSearch={filters.nomeOrganizacao}
                   onClickOrganization={handlePressOrganization}
@@ -232,7 +239,7 @@ const Home: React.FC<Props> = ({
       </Page>
       <MessageModal
         open={messageModal.open}
-        onClose={handleOpennMessageModalToggle}
+        onClose={handleOpenMessageModalToggle}
         width="100%"
         maxWidth="50rem"
       >

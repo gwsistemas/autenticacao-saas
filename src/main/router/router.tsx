@@ -1,7 +1,6 @@
 import React from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
-import { makeHome } from '@/main/factories/pages/home/home-factory'
-import { makeLogin } from '@/main/factories/pages/login/login-factory'
+import { makeLogin, makeHome, makeSuppliers } from '@/main/factories/pages'
 import { PrivateRoute } from '@/main/proxies'
 
 const Router: React.FC = () => {
@@ -9,7 +8,11 @@ const Router: React.FC = () => {
     <BrowserRouter>
       <Switch>
         <Route exact path={['/', '/login']} component={makeLogin} />
-        <PrivateRoute path="/home" component={makeHome} />
+        <PrivateRoute exact path="/home" component={makeHome} />
+        <Route path="/fornecedores/:organizationId" component={makeSuppliers} />
+        <Route path="*">
+          <h1>Página não encontrada</h1>
+        </Route>
       </Switch>
     </BrowserRouter>
   )
