@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 import React, { memo } from 'react'
-import { Image, Typography } from '@/presentation/components'
-import { OrgItem } from '../../styles'
+import { Image, Typography, ListItem, Loading } from '@/presentation/components'
 
 import { Props } from './types'
+import { OrganizationLoading, UserOrganizationListBase } from './styles'
 
 type IconTypes = {
   [x: string]: any
@@ -21,7 +21,8 @@ const UserOrganizationList: React.FC<Props> = ({
   organizationsData,
   textSearch,
   organizationType,
-  onClickOrganization
+  onClickOrganization,
+  loading
 }: Props) => {
   const rows: React.ReactElement[] = []
 
@@ -46,7 +47,7 @@ const UserOrganizationList: React.FC<Props> = ({
       organization.tipo_acesso.forEach((type) => {
         const localId = Math.floor(Math.random() * 100)
         rows.push(
-          <OrgItem
+          <ListItem
             key={localId}
             onClick={(): void =>
               onClickOrganization({ ...organization, tipo_acesso: [type] })
@@ -58,12 +59,12 @@ const UserOrganizationList: React.FC<Props> = ({
             />
             <Typography upperCase>{organization.nome_organizacao}</Typography>
             <i className={`fas ${iconTypes[type]}` || 'fa-user-tie'} />
-          </OrgItem>
+          </ListItem>
         )
       })
     } else {
       rows.push(
-        <OrgItem
+        <ListItem
           key={id}
           onClick={(): void => onClickOrganization(organization)}
         >
@@ -77,19 +78,27 @@ const UserOrganizationList: React.FC<Props> = ({
               iconTypes[organization.tipo_acesso[0]] || 'fa-user-tie'
             }`}
           />
-        </OrgItem>
+        </ListItem>
       )
     }
   })
 
+  if (!rows.length && loading) {
+    return (
+      <OrganizationLoading>
+        <Loading />
+      </OrganizationLoading>
+    )
+  }
+
   return (
-    <div style={{ minHeight: 210 }}>
+    <UserOrganizationListBase>
       {rows.length ? (
         rows
       ) : (
         <Typography>Nenhuma organização encontrada.</Typography>
       )}
-    </div>
+    </UserOrganizationListBase>
   )
 }
 
