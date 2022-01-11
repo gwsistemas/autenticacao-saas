@@ -12,4 +12,5 @@ export interface Props
   textSearch?: string
   organizationType?: string
   onClickOrganization?: (userOrganization: UserOrganizationUserModel) => void
+  loading: boolean
 }
