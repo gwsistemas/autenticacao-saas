@@ -83,7 +83,7 @@ const Login: React.FC<Props> = ({
     handleValidation()
   }
 
-  const handleOpennMessageModalToggle = (message: string = ''): void => {
+  const handleOpenMessageModalToggle = (message: string = ''): void => {
     setMessageModal((prevState) => ({
       open: !prevState.open,
       message
@@ -92,12 +92,12 @@ const Login: React.FC<Props> = ({
 
   const handleForgetPasswordSuccess = (message: string): void => {
     handleOpenForgetPasswordToggle()
-    handleOpennMessageModalToggle(message)
+    handleOpenMessageModalToggle(message)
   }
 
   const handleCNPJReturnMessage = (message: string): void => {
     handleOpenCNPJToogle()
-    handleOpennMessageModalToggle(message)
+    handleOpenMessageModalToggle(message)
   }
 
   const handleSubmit = async (
@@ -119,12 +119,14 @@ const Login: React.FC<Props> = ({
         email: state.email,
         senha: state.password
       })
-      setCurrentAccount(account)
+
+      setCurrentAccount({ ...account, senha: state.password })
       setState({ ...state, isLoading: false, mainError: '' })
+
       if (account.ativo) {
         history.push('/home')
       } else {
-        handleOpennMessageModalToggle(
+        handleOpenMessageModalToggle(
           `Informar ao usuário que a conta esta pendente de ativação e que um novo e-mail foi enviado para que seja ativada.`
         )
       }
@@ -234,7 +236,7 @@ const Login: React.FC<Props> = ({
       {messageModal.open && (
         <MessageModal
           open={messageModal.open}
-          onClose={handleOpennMessageModalToggle}
+          onClose={handleOpenMessageModalToggle}
           width="100%"
           maxWidth="50rem"
         >
