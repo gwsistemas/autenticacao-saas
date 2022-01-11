@@ -1,8 +1,5 @@
 import { HttpClient, HttpStatusCode } from '@/data/protocols/http'
-import {
-  InvalidSearchUserOrganizationError,
-  UnexpectedError
-} from '@/domain/errors'
+import { UnexpectedError } from '@/domain/errors'
 import { LoginSystem } from '@/domain/usecases'
 
 export class RemoteLoginSystem implements LoginSystem {
@@ -36,11 +33,10 @@ export class RemoteLoginSystem implements LoginSystem {
       withCredentials: true
     })
 
+    console.log('status: ', httpResponse.statusCode)
     switch (httpResponse.statusCode) {
       case HttpStatusCode.ok:
         return httpResponse.body
-      case HttpStatusCode.serverError:
-        throw new InvalidSearchUserOrganizationError()
       default:
         throw new UnexpectedError()
     }
