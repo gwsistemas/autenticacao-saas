@@ -8,7 +8,13 @@ type Props = {
 
 const RegisterAccountModal: React.FC<Props> = ({ open, onClose }: Props) => {
   return (
-    <Modal size="xl" width="90%" height="95%" isOpen={open} onClose={onClose}>
+    <Modal
+      width="100%"
+      maxWidth="125rem"
+      height="95%"
+      isOpen={open}
+      onClose={onClose}
+    >
       <Iframe data="https://gw-sas.s3.us-east-2.amazonaws.com/portal/recurso/HOM/index.html?stage=HOM" />
     </Modal>
   )
