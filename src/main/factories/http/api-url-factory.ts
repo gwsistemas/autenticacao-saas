@@ -1,5 +1,6 @@
 // console.log(process.env.ESTAGIO)
+// console.log(process.env.API_URL)
 
 export const makeApiUrl = (path: string): string => {
-  return `https://api.gwsistemas.com.br/api-gwsistemas-hom${path}`
+  return `${process.env.API_URL}${path}`
 }
