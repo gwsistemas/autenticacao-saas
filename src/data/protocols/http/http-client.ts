@@ -24,7 +24,8 @@ export enum HttpStatusCode {
   badRequest = 400,
   forbidden = 403,
   notFound = 400,
-  serverError = 500
+  serverError = 500,
+  badGateway = 502
 }
 
 export type HttpResponse<T = any> = {
