@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index",
-    "dev:base": "webpack server --config webpack.dev.js",
+    "dev:base": "webpack-dashboard -- webpack server --config webpack.dev.js",
     "dev": "npm run dev:base -- --open",
     "build": "webpack --config webpack.prod.js",
     "test": "jest --passWithNoTests -no-cache --runInBand",
