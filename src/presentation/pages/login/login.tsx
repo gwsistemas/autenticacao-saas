@@ -63,7 +63,7 @@ const Login: React.FC<Props> = ({
   const handleRegisterAccountToggle = (): void =>
     setOpenRegisterAccount(!openRegisterAccount)
 
-  const handleOpenCNPJToogle = (): void => setOpenCNPJ(!openCNPJ)
+  const handleOpenCNPJToggle = (): void => setOpenCNPJ(!openCNPJ)
 
   const history = useHistory()
 
@@ -96,7 +96,7 @@ const Login: React.FC<Props> = ({
   }
 
   const handleCNPJReturnMessage = (message: string): void => {
-    handleOpenCNPJToogle()
+    handleOpenCNPJToggle()
     handleOpenMessageModalToggle(message)
   }
 
@@ -132,7 +132,7 @@ const Login: React.FC<Props> = ({
       }
     } catch (error) {
       if (error.name === 'InvalideCredentialsError') {
-        handleOpenCNPJToogle()
+        handleOpenCNPJToggle()
       }
       setState({ ...state, isLoading: false })
     }
@@ -221,7 +221,7 @@ const Login: React.FC<Props> = ({
           validation={validation}
           searchUserOrganization={searchUserOrganization}
           open={openCNPJ}
-          onClose={handleOpenCNPJToogle}
+          onClose={handleOpenCNPJToggle}
           onSuccess={handleCNPJReturnMessage}
           user={{
             login_usuario: state.email,
