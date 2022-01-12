@@ -38,7 +38,10 @@ module.exports = merge(common, {
   },
   plugins: [
     new DefinePlugin({
-      'process.env.API_URL': JSON.stringify('https://fordevs.herokuapp.com/api')
+      'process.env.API_URL': JSON.stringify(
+        'https://api.gwsistemas.com.br/api-gwsistemas-hom'
+      ),
+      'process.env.ESTAGIO': JSON.stringify('HOM')
     }),
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, 'public', 'template.prod.html')
