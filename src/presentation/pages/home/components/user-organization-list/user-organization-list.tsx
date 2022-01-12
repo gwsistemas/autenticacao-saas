@@ -27,7 +27,7 @@ const UserOrganizationList: React.FC<Props> = ({
   const rows: React.ReactElement[] = []
 
   organizationsData.forEach((organization) => {
-    const id = Math.floor(Math.random() * 100)
+    const id = '_' + Math.random().toString(36).substr(2, 9)
     if (
       !handleTextNormalize(organization.nome_organizacao).includes(
         handleTextNormalize(textSearch)
