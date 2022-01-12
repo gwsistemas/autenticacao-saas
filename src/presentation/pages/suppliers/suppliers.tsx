@@ -58,7 +58,7 @@ const Suppliers: React.FC<Props> = ({
       setLoading(false)
     } catch (error) {
       setLoading(false)
-      console.log(error)
+      handleOpenMessageModalToggle(error.message)
     }
   }
 

@@ -2,6 +2,7 @@ import React, { memo } from 'react'
 import { Typography, ListItem, Loading } from '@/presentation/components'
 
 import { Props } from './types'
+import { UseSuppliersBase } from './styles'
 
 const handleTextNormalize = (text: string): string => text.toLowerCase().trim()
 
@@ -25,6 +26,7 @@ const SupplierList: React.FC<Props> = ({
     rows.push(
       <ListItem
         key={supplierItem.id}
+        justifyContent="center"
         onClick={(): void => onClickSupplier(supplierItem)}
       >
         <Typography upperCase>{supplierItem.razao_social}</Typography>
@@ -32,22 +34,22 @@ const SupplierList: React.FC<Props> = ({
     )
   })
 
-  if (!rows.length && loading) {
+  if (loading) {
     return (
-      <div>
+      <UseSuppliersBase>
         <Loading />
-      </div>
+      </UseSuppliersBase>
     )
   }
 
   return (
-    <div style={{ textAlign: 'center' }}>
+    <UseSuppliersBase>
       {rows.length ? (
         rows
       ) : (
         <Typography>Nenhum fornecedor não encontrado.</Typography>
       )}
-    </div>
+    </UseSuppliersBase>
   )
 }
 

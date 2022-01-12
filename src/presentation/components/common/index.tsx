@@ -1,7 +1,7 @@
 import { rgba } from 'polished'
 import styled, { css } from 'styled-components'
 
-import { ColumnProps, IframeProps } from './types'
+import { ColumnProps, IframeProps, ListItemProps } from './types'
 
 export const Page = styled.div`
   display: flex;
@@ -92,7 +92,7 @@ export const FormStatus = styled.div`
   color: ${({ theme }): string => theme.colors.error.main};
 `
 
-export const ListItem = styled.div`
+export const ListItem = styled.div<ListItemProps>`
   width: 100%;
   height: 45px;
   display: flex;
@@ -103,7 +103,8 @@ export const ListItem = styled.div`
   align-items: center;
   flex-direction: row;
   transition-duration: 0.3s;
-  justify-content: space-between;
+  justify-content: ${({ justifyContent }): string =>
+    justifyContent || 'flex-start'};
   transition-property: transform;
   border: 1px solid ${({ theme }) => theme.colors.grey[400]};
 

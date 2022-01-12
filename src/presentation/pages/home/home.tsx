@@ -81,14 +81,6 @@ const Home: React.FC<Props> = ({
       ...prevFilters,
       nomeOrganizacao
     }))
-    // const organizationFiltered = data.filter((organization) => {
-    //   return organization.nome_organizacao
-    //     .toLowerCase()
-    //     .trim()
-    //     .includes(value.toLowerCase().trim())
-    // })
-
-    // setOrganizationData(organizationFiltered)
   }
   const handleOpenMessageModalToggle = (message: string = ''): void => {
     setMessageModal((prevState) => ({

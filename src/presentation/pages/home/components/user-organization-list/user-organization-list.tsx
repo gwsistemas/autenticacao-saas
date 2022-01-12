@@ -49,6 +49,7 @@ const UserOrganizationList: React.FC<Props> = ({
         rows.push(
           <ListItem
             key={localId}
+            justifyContent="space-between"
             onClick={(): void =>
               onClickOrganization({ ...organization, tipo_acesso: [type] })
             }
@@ -66,6 +67,7 @@ const UserOrganizationList: React.FC<Props> = ({
       rows.push(
         <ListItem
           key={id}
+          justifyContent="space-between"
           onClick={(): void => onClickOrganization(organization)}
         >
           <Image
