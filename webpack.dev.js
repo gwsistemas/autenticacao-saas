@@ -1,6 +1,7 @@
 const path = require('path')
 const { DefinePlugin, EnvironmentPlugin } = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin')
 const { merge } = require('webpack-merge')
 const common = require('./webpack.common')
 
@@ -41,6 +42,7 @@ module.exports = merge(common, {
       directory: path.join(__dirname, 'public')
     },
     historyApiFallback: true,
+    hot: true,
     port: 8080
   },
   plugins: [
@@ -53,6 +55,7 @@ module.exports = merge(common, {
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, 'public', 'template.dev.html')
     }),
+    new ReactRefreshWebpackPlugin(),
     new EnvironmentPlugin({
       NODE_ENV: 'development',
       DEBUG: false
