@@ -1,6 +1,7 @@
 import { HttpClient, HttpStatusCode } from '@/data/protocols/http'
 import {
   AccessDeniedError,
+  BadGatewayError,
   NotFoundError,
   UnexpectedError
 } from '@/domain/errors'
@@ -30,6 +31,8 @@ export class RemoteLoadSupplierCustomers implements LoadSupplierCustomers {
         )
       case HttpStatusCode.forbidden:
         throw new AccessDeniedError()
+      case HttpStatusCode.badGateway:
+        throw new BadGatewayError()
       default:
         throw new UnexpectedError()
     }
