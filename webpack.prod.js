@@ -1,6 +1,7 @@
 const path = require('path')
 const { DefinePlugin } = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const CopyPlugin = require('copy-webpack-plugin')
 const { merge } = require('webpack-merge')
 const common = require('./webpack.common')
 
@@ -37,7 +38,21 @@ module.exports = merge(common, {
     'react-router-dom': 'ReactRouterDOM'
   },
   plugins: [
+    new CopyPlugin({
+      patterns: [
+        {
+          context: 'public',
+          from: '**/*',
+          globOptions: {
+            ignore: ['**/index.html']
+          }
+        }
+      ]
+    }),
     new DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify('production')
+      },
       'process.env.API_URL': JSON.stringify(
         'https://api.gwsistemas.com.br/api-gwsistemas-hom'
       ),

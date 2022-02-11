@@ -47,6 +47,9 @@ module.exports = merge(common, {
   },
   plugins: [
     new DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify('development')
+      },
       'process.env.API_URL': JSON.stringify(
         'https://api.gwsistemas.com.br/api-gwsistemas-hom'
       ),
