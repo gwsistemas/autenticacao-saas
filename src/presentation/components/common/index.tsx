@@ -61,8 +61,7 @@ export const Form = styled.form`
 `
 
 export const Image = styled.img`
-  width: 75px;
-  height: 30px;
+  max-width: 200px;
   margin: 0px auto;
   margin-top: 1rem;
   margin-bottom: 1.6rem;
