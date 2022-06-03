@@ -127,6 +127,10 @@ const Home: React.FC<Props> = ({
     history.push(`fornecedores/${organizationItem.id_organizacao}`)
   }
 
+  const setOrganizationTypeToggle = (type = ''): void => {
+    setOrganizationType((prevType) => (prevType === type ? '' : type))
+  }
+
   useEffect(() => {
     setOrganizationDataLoading(true)
     userListOrganizationUser
@@ -136,7 +140,7 @@ const Home: React.FC<Props> = ({
       .then((data) => {
         if (!data?.length) {
           handleOpenMessageModalToggle(
-            'Você não possui acessi aos ambientes das organizações'
+            'Você não possui acesso aos ambientes das organizações'
           )
           return
         }
@@ -165,7 +169,7 @@ const Home: React.FC<Props> = ({
           <Row>
             <Button
               variant="text"
-              onClick={(): void => setOrganizationType('u')}
+              onClick={(): void => setOrganizationTypeToggle('u')}
             >
               <Figure active={organizationType === 'u'}>
                 <i className="fas fa-user-tie" />
@@ -174,7 +178,7 @@ const Home: React.FC<Props> = ({
             </Button>
             <Button
               variant="text"
-              onClick={(): void => setOrganizationType('r')}
+              onClick={(): void => setOrganizationTypeToggle('r')}
             >
               <Figure active={organizationType === 'r'}>
                 <i className="far fa-handshake" />
@@ -183,7 +187,7 @@ const Home: React.FC<Props> = ({
             </Button>
             <Button
               variant="text"
-              onClick={(): void => setOrganizationType('c')}
+              onClick={(): void => setOrganizationTypeToggle('c')}
             >
               <Figure active={organizationType === 'c'}>
                 <i className="fas fa-user-circle" />

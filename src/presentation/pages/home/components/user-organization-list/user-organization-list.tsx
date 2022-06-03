@@ -26,6 +26,8 @@ const UserOrganizationList: React.FC<Props> = ({
 }: Props) => {
   const rows: React.ReactElement[] = []
 
+  console.log(organizationType)
+
   organizationsData.forEach((organization) => {
     const id = '_' + Math.random().toString(36).substr(2, 9)
     if (
