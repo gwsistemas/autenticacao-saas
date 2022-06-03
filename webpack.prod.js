@@ -44,7 +44,11 @@ module.exports = merge(common, {
           context: 'public',
           from: '**/*',
           globOptions: {
-            ignore: ['**/index.html']
+            ignore: [
+              '**/index.html',
+              '**/template.dev.html',
+              '**/template.prod.html'
+            ]
           }
         }
       ]
