@@ -4,36 +4,11 @@ import { Typography, ListItem, Loading } from '@/presentation/components'
 import { Props } from './types'
 import { UseSuppliersBase } from './styles'
 
-const handleTextNormalize = (text: string): string => text.toLowerCase().trim()
-
 const SupplierList: React.FC<Props> = ({
-  textSearch,
   suppliersData,
   onClickSupplier,
   loading
 }: Props) => {
-  const rows: React.ReactElement[] = []
-
-  suppliersData.forEach((supplierItem) => {
-    if (
-      !handleTextNormalize(supplierItem.razao_social).includes(
-        handleTextNormalize(textSearch)
-      )
-    ) {
-      return
-    }
-
-    rows.push(
-      <ListItem
-        key={supplierItem.id}
-        justifyContent="center"
-        onClick={(): void => onClickSupplier(supplierItem)}
-      >
-        <Typography upperCase>{supplierItem.razao_social}</Typography>
-      </ListItem>
-    )
-  })
-
   if (loading) {
     return (
       <UseSuppliersBase>
@@ -44,8 +19,16 @@ const SupplierList: React.FC<Props> = ({
 
   return (
     <UseSuppliersBase>
-      {rows.length ? (
-        rows
+      {suppliersData.length ? (
+        suppliersData.map((supplierItem) => (
+          <ListItem
+            key={supplierItem.id}
+            justifyContent="center"
+            onClick={(): void => onClickSupplier(supplierItem)}
+          >
+            <Typography upperCase>{supplierItem.razao_social}</Typography>
+          </ListItem>
+        ))
       ) : (
         <Typography>Nenhum fornecedor não encontrado.</Typography>
       )}
