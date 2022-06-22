@@ -14,6 +14,7 @@ export type UserOrganizationUserModel = {
   organizacao_img_logo: string
   dt_vencimento_organizacao: string
   tipo_acesso: string[]
+  type: string
 }
 
 export type UserOrganizationListUserModel = UserOrganizationUserModel[]
