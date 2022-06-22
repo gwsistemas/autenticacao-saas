@@ -13,6 +13,8 @@ const Pagination: React.FC<Props> = ({
   const pageNumbers = []
   const totalPage = Math.ceil(totalData / itemPerPage)
 
+  console.log(totalData, itemPerPage)
+
   for (let i = 1; i <= totalPage; i++) {
     pageNumbers.push(i)
   }
@@ -35,7 +37,7 @@ const Pagination: React.FC<Props> = ({
       </PaginationList>
       <PaginationButton
         onClick={onNextPaginate}
-        disabled={currentPage === totalPage}
+        disabled={currentPage === totalPage || totalData === 0}
       >
         {'>'}
       </PaginationButton>
