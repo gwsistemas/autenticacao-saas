@@ -36,13 +36,11 @@ const Home: React.FC<Props> = ({
   loginSystem
 }: Props) => {
   const [organizationData, setOrganizationData] = useState([])
+  const [organizationFiltered, setOrganizationFiltered] = useState([])
   const [organizationLoading, setOrganizationDataLoading] = useState(false)
   const [organizationType, setOrganizationType] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
-  const [filters, setFilters] = useState({
-    type: 'u',
-    nomeOrganizacao: ''
-  })
+
   const [messageModal, setMessageModal] = useState({
     open: false,
     message: ''
@@ -55,7 +53,7 @@ const Home: React.FC<Props> = ({
   const organizationPerPage = 4
   const indexOfLastOrganization = currentPage * organizationPerPage
   const indexOfFirstOrganization = indexOfLastOrganization - organizationPerPage
-  const currentOrganization = organizationData.slice(
+  const currentOrganization = organizationFiltered.slice(
     indexOfFirstOrganization,
     indexOfLastOrganization
   )
@@ -65,22 +63,25 @@ const Home: React.FC<Props> = ({
   }
 
   const handlePrevPage = (): void => {
-    if (currentPage > 1 && currentPage <= organizationData.length) {
+    if (currentPage > 1 && currentPage <= organizationFiltered.length) {
       setCurrentPage(currentPage - 1)
     }
   }
   const handleNextPage = (): void => {
-    if (currentPage < organizationData.length) {
+    if (currentPage < organizationFiltered.length) {
       setCurrentPage(currentPage + 1)
     }
   }
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const nomeOrganizacao = event.target.value
-    setFilters((prevFilters) => ({
-      ...prevFilters,
-      nomeOrganizacao
-    }))
+    const organizationSearch = organizationData.filter((item) =>
+      item.nome_organizacao
+        .toLowerCase()
+        .trim()
+        .includes(nomeOrganizacao.toLowerCase().trim())
+    )
+    setOrganizationFiltered(organizationSearch)
   }
   const handleOpenMessageModalToggle = (message: string = ''): void => {
     setMessageModal((prevState) => ({
@@ -144,7 +145,14 @@ const Home: React.FC<Props> = ({
           )
           return
         }
-        setOrganizationData(data)
+        const newData = []
+        data.forEach((organization) => {
+          organization.tipo_acesso.forEach((organizationItem) => {
+            newData.push({ ...organization, type: organizationItem })
+          })
+        })
+        setOrganizationData(newData)
+        setOrganizationFiltered(newData)
         setOrganizationDataLoading(false)
       })
       .catch((error) => {
@@ -152,6 +160,21 @@ const Home: React.FC<Props> = ({
         console.log(error.message)
       })
   }, [])
+
+  useEffect(() => {
+    if (organizationData.length) {
+      if (organizationType) {
+        const filterData = organizationData.filter(
+          (organization) => organization.type === organizationType
+        )
+        setOrganizationFiltered(filterData)
+      }
+      if (organizationData.length && !organizationType) {
+        setOrganizationFiltered(organizationData)
+      }
+      setCurrentPage(1)
+    }
+  }, [organizationType])
 
   return (
     <>
@@ -210,21 +233,17 @@ const Home: React.FC<Props> = ({
           <Title>Selecione a organização desejada</Title>
           <OrgList>
             <Column>
-              {
-                <UserOrganizationList
-                  loading={organizationLoading}
-                  organizationsData={currentOrganization}
-                  textSearch={filters.nomeOrganizacao}
-                  onClickOrganization={handlePressOrganization}
-                  organizationType={organizationType}
-                />
-              }
+              <UserOrganizationList
+                loading={organizationLoading}
+                organizationsData={currentOrganization}
+                onClickOrganization={handlePressOrganization}
+              />
             </Column>
             <Column>
               <Pagination
                 currentPage={currentPage}
                 itemPerPage={organizationPerPage}
-                totalData={organizationData.length}
+                totalData={organizationFiltered.length}
                 onPaginate={handlePaginate}
                 onPrevPaginate={handlePrevPage}
                 onNextPaginate={handleNextPage}
