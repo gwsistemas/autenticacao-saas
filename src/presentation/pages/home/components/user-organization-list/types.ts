@@ -9,8 +9,6 @@ export interface Props
     HTMLDivElement
   > {
   organizationsData: UserOrganizationListUserModel
-  textSearch?: string
-  organizationType?: string
   onClickOrganization?: (userOrganization: UserOrganizationUserModel) => void
   loading: boolean
 }
