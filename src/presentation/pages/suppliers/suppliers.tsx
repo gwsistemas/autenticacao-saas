@@ -10,7 +10,8 @@ import {
   Page,
   Row,
   Divider,
-  MessageModal
+  MessageModal,
+  Pagination
 } from '@/presentation/components'
 import {
   currentAccountState,
@@ -20,15 +21,24 @@ import { Props } from './types'
 import { Search, SearchIcon, Title } from './styles'
 import SupplierList from './components/supplier-list'
 import { SupplierCustomer, SupplierCustomersList } from '@/domain/models'
+import { lowerCaseAndTrim } from '@/presentation/utitls/text'
+import { AcessesTypes } from '../home/types'
+
+const acessesTypes: AcessesTypes = {
+  plural: { u: 'clientes', c: 'colaboradores', r: 'representantes' },
+  single: { u: 'cliente', c: 'colaborador', r: 'representante' }
+}
 
 const Suppliers: React.FC<Props> = ({
   loadSupplierCustomers,
   loginSystem
 }: Props) => {
-  const [textSearch, setTextSearch] = useState('')
   const [loading, setLoading] = useState(false)
   const [suppliersCustomers, setSuppliersCustomers] =
     useState<SupplierCustomersList>([])
+  const [suppliersCustomersFiltered, setSuppliersCustomersFiltered] =
+    useState<SupplierCustomersList>([])
+  const [currentPage, setCurrentPage] = useState(1)
   const [messageModal, setMessageModal] = useState({
     open: false,
     message: ''
@@ -40,12 +50,45 @@ const Suppliers: React.FC<Props> = ({
     }))
   }
 
+  const suppliersPerPage = 1
+  const indexOfLastOrganization = currentPage * suppliersPerPage
+  const indexOfFirstOrganization = indexOfLastOrganization - suppliersPerPage
+  const currentSuppliers = suppliersCustomersFiltered.slice(
+    indexOfFirstOrganization,
+    indexOfLastOrganization
+  )
+
+  const handlePaginate = (pageNumber: number): void => {
+    setCurrentPage(pageNumber)
+  }
+
+  const handlePrevPage = (): void => {
+    if (currentPage > 1 && currentPage <= suppliersCustomersFiltered.length) {
+      setCurrentPage(currentPage - 1)
+    }
+  }
+  const handleNextPage = (): void => {
+    if (currentPage < suppliersCustomersFiltered.length) {
+      setCurrentPage(currentPage + 1)
+    }
+  }
+
   const params = useParams<{ organizationId: string }>()
   const { getCurrentAccount } = useRecoilValue(currentAccountState)
   const { getCurrentOrganization } = useRecoilValue(currentOrganizationState)
 
+  const currentOrganization = getCurrentOrganization()
+
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    setTextSearch(event.target.value)
+    const { value } = event.target
+    // setTextSearch(event.target.value)
+    const suppliersFiltered = suppliersCustomers.filter((supplierItem) =>
+      lowerCaseAndTrim(supplierItem.razao_social).includes(
+        lowerCaseAndTrim(value)
+      )
+    )
+    setSuppliersCustomersFiltered(suppliersFiltered)
+    setCurrentPage(1)
   }
 
   const handleLoadSupplierCustomers = async (): Promise<void> => {
@@ -54,6 +97,7 @@ const Suppliers: React.FC<Props> = ({
       const suppliersData = await loadSupplierCustomers.load({
         organizacao_id: Number(params.organizationId)
       })
+      setSuppliersCustomersFiltered(suppliersData)
       setSuppliersCustomers(suppliersData)
       setLoading(false)
     } catch (error) {
@@ -62,21 +106,23 @@ const Suppliers: React.FC<Props> = ({
     }
   }
 
+  console.log('currentOrganization = ', currentOrganization)
+
   const handleRedirectSupplier = async (
     supplierItem: SupplierCustomer
   ): Promise<void> => {
     try {
-      const organization = getCurrentOrganization()
       await loginSystem.auth({
-        linkSistema: organization.ambiente_organizacao.url_app_ambiente,
+        linkSistema: currentOrganization.ambiente_organizacao.url_app_ambiente,
         clienteFornecedorId: -1,
         isGweb: true,
         login: getCurrentAccount().email,
         senha: getCurrentAccount().senha,
         tipoAcesso: supplierItem.tipo_acesso,
-        organizacaoEscolhidaId: organization.id_organizacao
+        organizacaoEscolhidaId: currentOrganization.id_organizacao
       })
-      window.location.href = organization.ambiente_organizacao.url_app_ambiente
+      window.location.href =
+        currentOrganization.ambiente_organizacao.url_app_ambiente
     } catch (error) {
       handleOpenMessageModalToggle(
         'Algo de errado aconteceu, tente novamente mais tarde.'
@@ -87,6 +133,9 @@ const Suppliers: React.FC<Props> = ({
   const handleClickSupplier = (supplierItem: SupplierCustomer): void => {
     void handleRedirectSupplier(supplierItem)
   }
+
+  const textSingleTerm = acessesTypes.single[currentOrganization.type]
+  const textPluralTerm = acessesTypes.plural[currentOrganization.type]
 
   useEffect(() => {
     if (params.organizationId) {
@@ -113,24 +162,34 @@ const Suppliers: React.FC<Props> = ({
               </SearchIcon>
               <Input
                 fullWidth
-                placeholder="Pesquise outras representantes"
+                placeholder={`Pesquise outros ${textPluralTerm}`}
                 onChange={handleSearch}
-                value={textSearch}
               />
             </Search>
           </Row>
-          <Title>Selecione o fornecedor desejado</Title>
+          <Title>{`Selecione o ${textSingleTerm} desejado`}</Title>
           <div
             style={{
               padding: '0px 7rem'
             }}
           >
-            <SupplierList
-              loading={loading}
-              suppliersData={suppliersCustomers}
-              textSearch={textSearch}
-              onClickSupplier={handleClickSupplier}
-            />
+            <Column>
+              <SupplierList
+                loading={loading}
+                suppliersData={currentSuppliers}
+                onClickSupplier={handleClickSupplier}
+              />
+            </Column>
+            <Column>
+              <Pagination
+                currentPage={currentPage}
+                itemPerPage={suppliersPerPage}
+                totalData={suppliersCustomersFiltered.length}
+                onPaginate={handlePaginate}
+                onPrevPaginate={handlePrevPage}
+                onNextPaginate={handleNextPage}
+              />
+            </Column>
           </div>
         </Column>
       </Page>

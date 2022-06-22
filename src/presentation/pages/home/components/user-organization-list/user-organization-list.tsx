@@ -15,79 +15,12 @@ const iconTypes: IconTypes = {
   r: 'fa-handshake'
 }
 
-const handleTextNormalize = (text: string): string => text.toLowerCase().trim()
-
 const UserOrganizationList: React.FC<Props> = ({
   organizationsData,
-  textSearch,
-  organizationType,
   onClickOrganization,
   loading
 }: Props) => {
-  const rows: React.ReactElement[] = []
-
-  console.log(organizationType)
-
-  organizationsData.forEach((organization) => {
-    const id = '_' + Math.random().toString(36).substr(2, 9)
-    if (
-      !handleTextNormalize(organization.nome_organizacao).includes(
-        handleTextNormalize(textSearch)
-      )
-    ) {
-      return
-    }
-
-    if (
-      organizationType &&
-      !organization.tipo_acesso.includes(organizationType)
-    ) {
-      return
-    }
-
-    if (organization.tipo_acesso.length > 1) {
-      organization.tipo_acesso.forEach((type) => {
-        const localId = Math.floor(Math.random() * 100)
-        rows.push(
-          <ListItem
-            key={localId}
-            justifyContent="space-between"
-            onClick={(): void =>
-              onClickOrganization({ ...organization, tipo_acesso: [type] })
-            }
-          >
-            <Image
-              src={organization.organizacao_img_logo}
-              alt={organization.nome_organizacao}
-            />
-            <Typography upperCase>{organization.nome_organizacao}</Typography>
-            <i className={`fas ${iconTypes[type]}` || 'fa-user-tie'} />
-          </ListItem>
-        )
-      })
-    } else {
-      rows.push(
-        <ListItem
-          key={id}
-          justifyContent="space-between"
-          onClick={(): void => onClickOrganization(organization)}
-        >
-          <Image
-            src={organization.organizacao_img_logo}
-            alt={organization.nome_organizacao}
-          />
-          <Typography upperCase>{organization.nome_organizacao}</Typography>
-          <i
-            className={`fas ${
-              iconTypes[organization.tipo_acesso[0]] || 'fa-user-tie'
-            }`}
-          />
-        </ListItem>
-      )
-    }
-  })
-
-  if (!rows.length && loading) {
+  if (!organizationsData.length && loading) {
     return (
       <OrganizationLoading>
         <Loading />
@@ -97,8 +30,28 @@ const UserOrganizationList: React.FC<Props> = ({
 
   return (
     <UserOrganizationListBase>
-      {rows.length ? (
-        rows
+      {organizationsData.length ? (
+        organizationsData.map((organization, index) => (
+          <ListItem
+            key={index}
+            justifyContent="space-between"
+            onClick={(): void =>
+              onClickOrganization({
+                ...organization,
+                tipo_acesso: [organization.type]
+              })
+            }
+          >
+            <Image
+              src={organization.organizacao_img_logo}
+              alt={organization.nome_organizacao}
+            />
+            <Typography upperCase>{organization.nome_organizacao}</Typography>
+            <i
+              className={`fas ${iconTypes[organization.type]}` || 'fa-user-tie'}
+            />
+          </ListItem>
+        ))
       ) : (
         <Typography>Nenhuma organização encontrada.</Typography>
       )}
