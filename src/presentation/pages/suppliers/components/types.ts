@@ -6,7 +6,6 @@ export interface Props
     HTMLDivElement
   > {
   suppliersData: SupplierCustomersList
-  textSearch?: string
   onClickSupplier?: (supplier: SupplierCustomer) => void
   loading?: boolean
 }
