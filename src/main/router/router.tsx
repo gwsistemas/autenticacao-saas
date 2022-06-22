@@ -9,7 +9,10 @@ const Router: React.FC = () => {
       <Switch>
         <Route exact path={['/', '/login']} component={makeLogin} />
         <PrivateRoute exact path="/home" component={makeHome} />
-        <Route path="/fornecedores/:organizationId" component={makeSuppliers} />
+        <PrivateRoute
+          path="/fornecedores/:organizationId"
+          component={makeSuppliers}
+        />
         <Route path="*">
           <h1>Página não encontrada</h1>
         </Route>
