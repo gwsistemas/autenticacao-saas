@@ -92,7 +92,8 @@ const Home: React.FC<Props> = ({
 
   const handlePressOrganization = (item: UserOrganizationUserModel): void => {
     const typeAcessoOrganization = item.tipo_acesso[0]
-    if (typeAcessoOrganization === 'c') {
+
+    if (typeAcessoOrganization === 'u') {
       void handleSendOrganization(item, typeAcessoOrganization)
     } else {
       handleLoadSupplierCustomers(item)
@@ -101,7 +102,7 @@ const Home: React.FC<Props> = ({
 
   const handleSendOrganization = async (
     item: UserOrganizationUserModel,
-    tipoAcesso: string
+    tipoAcesso?: string
   ): Promise<void> => {
     try {
       await loginSystem.auth({
@@ -192,9 +193,9 @@ const Home: React.FC<Props> = ({
           <Row>
             <Button
               variant="text"
-              onClick={(): void => setOrganizationTypeToggle('u')}
+              onClick={(): void => setOrganizationTypeToggle('c')}
             >
-              <Figure active={organizationType === 'u'}>
+              <Figure active={organizationType === 'c'}>
                 <i className="fas fa-user-tie" />
                 <Figcaption>Cliente</Figcaption>
               </Figure>
@@ -210,9 +211,9 @@ const Home: React.FC<Props> = ({
             </Button>
             <Button
               variant="text"
-              onClick={(): void => setOrganizationTypeToggle('c')}
+              onClick={(): void => setOrganizationTypeToggle('u')}
             >
-              <Figure active={organizationType === 'c'}>
+              <Figure active={organizationType === 'u'}>
                 <i className="fas fa-user-circle" />
                 <Figcaption>Colaborador</Figcaption>
               </Figure>
