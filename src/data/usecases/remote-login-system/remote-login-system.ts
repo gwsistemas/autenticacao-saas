@@ -33,7 +33,6 @@ export class RemoteLoginSystem implements LoginSystem {
       withCredentials: true
     })
 
-    console.log('status: ', httpResponse.statusCode)
     switch (httpResponse.statusCode) {
       case HttpStatusCode.ok:
         return httpResponse.body

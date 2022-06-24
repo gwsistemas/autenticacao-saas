@@ -13,8 +13,6 @@ const Pagination: React.FC<Props> = ({
   const pageNumbers = []
   const totalPage = Math.ceil(totalData / itemPerPage)
 
-  console.log(totalData, itemPerPage)
-
   for (let i = 1; i <= totalPage; i++) {
     pageNumbers.push(i)
   }
