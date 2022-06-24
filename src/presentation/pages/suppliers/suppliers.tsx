@@ -50,7 +50,7 @@ const Suppliers: React.FC<Props> = ({
     }))
   }
 
-  const suppliersPerPage = 1
+  const suppliersPerPage = 4
   const indexOfLastOrganization = currentPage * suppliersPerPage
   const indexOfFirstOrganization = indexOfLastOrganization - suppliersPerPage
   const currentSuppliers = suppliersCustomersFiltered.slice(
@@ -79,15 +79,24 @@ const Suppliers: React.FC<Props> = ({
 
   const currentOrganization = getCurrentOrganization()
 
+  const filterSuppliersByTypeAccess = (
+    data: SupplierCustomersList
+  ): SupplierCustomersList => {
+    return data.filter(
+      (supplier) => supplier.tipo_acesso === currentOrganization.type
+    )
+  }
+
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const { value } = event.target
-    // setTextSearch(event.target.value)
     const suppliersFiltered = suppliersCustomers.filter((supplierItem) =>
       lowerCaseAndTrim(supplierItem.razao_social).includes(
         lowerCaseAndTrim(value)
       )
     )
-    setSuppliersCustomersFiltered(suppliersFiltered)
+    setSuppliersCustomersFiltered(
+      filterSuppliersByTypeAccess(suppliersFiltered)
+    )
     setCurrentPage(1)
   }
 
@@ -97,7 +106,7 @@ const Suppliers: React.FC<Props> = ({
       const suppliersData = await loadSupplierCustomers.load({
         organizacao_id: Number(params.organizationId)
       })
-      setSuppliersCustomersFiltered(suppliersData)
+      setSuppliersCustomersFiltered(filterSuppliersByTypeAccess(suppliersData))
       setSuppliersCustomers(suppliersData)
       setLoading(false)
     } catch (error) {
@@ -105,8 +114,6 @@ const Suppliers: React.FC<Props> = ({
       handleOpenMessageModalToggle(error.message)
     }
   }
-
-  console.log('currentOrganization = ', currentOrganization)
 
   const handleRedirectSupplier = async (
     supplierItem: SupplierCustomer
