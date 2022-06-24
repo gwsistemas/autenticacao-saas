@@ -10,8 +10,8 @@ type IconTypes = {
 }
 
 const iconTypes: IconTypes = {
-  u: 'fa-user-tie',
-  c: 'fa-user-circle',
+  u: 'fa-user-circle',
+  c: 'fa-user-tie',
   r: 'fa-handshake'
 }
 
