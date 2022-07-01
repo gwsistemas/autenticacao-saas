@@ -121,7 +121,7 @@ const Suppliers: React.FC<Props> = ({
     try {
       await loginSystem.auth({
         linkSistema: currentOrganization.ambiente_organizacao.url_app_ambiente,
-        clienteFornecedorId: -1,
+        clienteFornecedorId: supplierItem.id,
         isGweb: true,
         login: getCurrentAccount().email,
         senha: getCurrentAccount().senha,
