@@ -31,7 +31,9 @@ const fullLoading = css`
   top: 50%;
   left: 50%;
   z-index: 10;
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: rgba(0, 0, 0, 0.6);
+  -webkit-backdrop-filter: blur(1px);
+  backdrop-filter: blur(1px);
   transform: translate(-50%, -50%);
   width: 100%;
   height: 100%;
