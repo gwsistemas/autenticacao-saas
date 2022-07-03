@@ -44,3 +44,15 @@ export const ContentButton = styled.div`
     font-size: 1.7rem;
   }
 `
+
+export const PasswordMessage = styled.div`
+  font-size: 1.3rem;
+  padding: 0 4.5rem;
+  text-align: center;
+  color: ${({ theme }) => theme.colors.error.main};
+  .highlight {
+    color: ${({ theme }) => theme.colors.primary.main};
+    font-weight: 600;
+    cursor: pointer;
+  }
+`

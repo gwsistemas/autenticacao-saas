@@ -12,7 +12,8 @@ import {
   Row,
   Divider,
   Pagination,
-  MessageModal
+  MessageModal,
+  Loading
 } from '@/presentation/components'
 import {
   currentAccountState,
@@ -38,6 +39,7 @@ const Home: React.FC<Props> = ({
   const [organizationData, setOrganizationData] = useState([])
   const [organizationFiltered, setOrganizationFiltered] = useState([])
   const [organizationLoading, setOrganizationDataLoading] = useState(false)
+  const [sendOrganization, setSendOrganization] = useState(false)
   const [organizationType, setOrganizationType] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
 
@@ -105,6 +107,7 @@ const Home: React.FC<Props> = ({
     tipoAcesso?: string
   ): Promise<void> => {
     try {
+      setSendOrganization(true)
       await loginSystem.auth({
         linkSistema: item.ambiente_organizacao.url_app_ambiente,
         clienteFornecedorId: -1,
@@ -119,6 +122,8 @@ const Home: React.FC<Props> = ({
       handleOpenMessageModalToggle(
         'Algo de errado aconteceu, tente novamente mais tarde.'
       )
+    } finally {
+      setSendOrganization(false)
     }
   }
 
@@ -179,6 +184,7 @@ const Home: React.FC<Props> = ({
 
   return (
     <>
+      {sendOrganization && <Loading full />}
       <Page>
         <Column hideMobile data-testid="column-home">
           <Iframe

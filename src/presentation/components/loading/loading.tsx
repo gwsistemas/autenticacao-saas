@@ -1,13 +1,16 @@
 import React from 'react'
-import { LoadingBase } from './styles'
+import { LoadingBase, LoadingWrap } from './styles'
+import { Props } from './types'
 
-const Loading: React.FC = () => {
+const Loading: React.FC<Props> = ({ full }) => {
   return (
-    <LoadingBase>
-      <span></span>
-      <span></span>
-      <span></span>
-    </LoadingBase>
+    <LoadingWrap full={full}>
+      <LoadingBase>
+        <span></span>
+        <span></span>
+        <span></span>
+      </LoadingBase>
+    </LoadingWrap>
   )
 }
 

@@ -11,7 +11,8 @@ import {
   Row,
   Divider,
   MessageModal,
-  Pagination
+  Pagination,
+  Loading
 } from '@/presentation/components'
 import {
   currentAccountState,
@@ -34,6 +35,7 @@ const Suppliers: React.FC<Props> = ({
   loginSystem
 }: Props) => {
   const [loading, setLoading] = useState(false)
+  const [sendSupplier, setSendSupplier] = useState(false)
   const [suppliersCustomers, setSuppliersCustomers] =
     useState<SupplierCustomersList>([])
   const [suppliersCustomersFiltered, setSuppliersCustomersFiltered] =
@@ -119,9 +121,10 @@ const Suppliers: React.FC<Props> = ({
     supplierItem: SupplierCustomer
   ): Promise<void> => {
     try {
+      setSendSupplier(true)
       await loginSystem.auth({
         linkSistema: currentOrganization.ambiente_organizacao.url_app_ambiente,
-        clienteFornecedorId: -1,
+        clienteFornecedorId: supplierItem.id,
         isGweb: true,
         login: getCurrentAccount().email,
         senha: getCurrentAccount().senha,
@@ -134,6 +137,8 @@ const Suppliers: React.FC<Props> = ({
       handleOpenMessageModalToggle(
         'Algo de errado aconteceu, tente novamente mais tarde.'
       )
+    } finally {
+      setSendSupplier(false)
     }
   }
 
@@ -152,6 +157,7 @@ const Suppliers: React.FC<Props> = ({
 
   return (
     <>
+      {sendSupplier && <Loading full />}
       <Page>
         <Column hideMobile>
           <Iframe
