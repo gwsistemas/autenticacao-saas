@@ -15,7 +15,7 @@ import {
   MessageModal
 } from '@/presentation/components'
 
-import { Icones, LinkButton } from './styles'
+import { Icones, LinkButton, PasswordMessage } from './styles'
 import { Validation } from '@/presentation/protocols/validation'
 import {
   Authentication,
@@ -26,6 +26,7 @@ import { currentAccountState } from '@/presentation/state-management/atoms'
 import ForgetPasswordModal from './components/forget-password-modal'
 import RegisterAccountModal from './components/register-account-modal'
 import CNPJCompanyModal from './components/cnpj-company-modal'
+import { isEmail } from '@/presentation/utitls/validation'
 
 type Props = {
   validation: Validation
@@ -43,6 +44,8 @@ const Login: React.FC<Props> = ({
   const [openRegisterAccount, setOpenRegisterAccount] = useState(false)
   const [openForgetPassword, setOpenForgetPassword] = useState(false)
   const [openCNPJ, setOpenCNPJ] = useState(false)
+  const [showForgetPasswordMessage, setShowForgetPasswordMessage] =
+    useState(false)
   const [messageModal, setMessageModal] = useState({
     open: false,
     message: ''
@@ -131,8 +134,10 @@ const Login: React.FC<Props> = ({
         )
       }
     } catch (error) {
-      if (error.name === 'InvalideCredentialsError') {
+      if (error.name === 'InvalideCredentialsError' && !isEmail(state.email)) {
         handleOpenCNPJToggle()
+      } else {
+        setShowForgetPasswordMessage(true)
       }
       setState({ ...state, isLoading: false })
     }
@@ -189,6 +194,21 @@ const Login: React.FC<Props> = ({
             </Button>
           </Row>
         </Form>
+        {showForgetPasswordMessage && (
+          <Row>
+            <Column>
+              <PasswordMessage>
+                Dados de acesso invalidos. Esqueceu a senha?
+                <br />
+                <span
+                  onClick={handleOpenForgetPasswordToggle}
+                  className="highlight"
+                >{` Clique aqui `}</span>
+                PasswordMessageara resgatar a senha
+              </PasswordMessage>
+            </Column>
+          </Row>
+        )}
         <Row>
           <Column>
             <LinkButton
