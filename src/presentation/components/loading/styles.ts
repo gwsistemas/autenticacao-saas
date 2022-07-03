@@ -1,4 +1,5 @@
-import styled, { keyframes } from 'styled-components'
+import styled, { keyframes, css } from 'styled-components'
+import { Props } from './types'
 
 const point1 = keyframes`
   to {
@@ -25,13 +26,31 @@ const point3 = keyframes`
   }
 `
 
+const fullLoading = css`
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 10;
+  background-color: rgba(0, 0, 0, 0.2);
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
+
+export const LoadingWrap = styled.div<Props>`
+  ${({ full }) => full && fullLoading};
+`
+
 export const LoadingBase = styled.div`
   > span {
     display: inline-block;
     border-radius: 50%;
-    width: 6px;
-    height: 6px;
-    background-color: #444;
+    width: 8px;
+    height: 8px;
+    background-color: ${({ theme }) => theme.colors.primary.main};
     margin-right: 0.6rem;
     &:last-child {
       margin-right: 0;
